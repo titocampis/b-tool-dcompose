@@ -8,6 +8,6 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
-q.insert_friend(collection, name="Mario Alcaide Almazán", birthday=datetime(2006, 5, 8))
-#q.remove_friend_by_name(collection, "Mario Alcaide Almazán")
+q.insert_friend(collection, name="Mar Estanyol Zabala", birthday=datetime(1997, 3, 17))
+#q.remove_friend_by_name(collection, "Josefa Perez Rodriguez")
 q.check_friends(collection)

@@ -9,6 +9,7 @@ collection = db["friends_collection"]
 
 # Set the name field as unique
 q.create_unique_index(collection, field="name")
+q.create_unique_index(collection, field="phone")
 
 # Check indexes
 q.check_indexes(collection)
