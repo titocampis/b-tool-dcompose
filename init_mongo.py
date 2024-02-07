@@ -8,8 +8,8 @@ db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
 # Set the name field as unique
-q.create_unique_index(collection, field="name")
-q.create_unique_index(collection, field="phone")
+collection.create_index([('name', 1)], unique=True)
+# q.create_birthday_index(collection)
 
-# Check indexes
-q.check_indexes(collection)
+# Get indexes
+q.get_indexes(collection)
