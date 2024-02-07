@@ -14,9 +14,9 @@ collection = db["friends_collection"]
 # q.update_by_name(collection, name, 'sex', False)
 # q.update_by_name(collection, name, 'alias', 'Jiminy')
 # q.update_by_name(collection, name, 'phone', '654321987')
-q.remove_friend_by_name(collection, "Jimena Cricketa")
+# q.remove_friend_by_name(collection, "Jimena Cricketa")
 # q.get_friend_by_alias(collection, 'tete')
-#q.get_friend_by_name(collection, name)
+# q.get_friend_by_name(collection, name)
 q.get_friends(collection)
 
 # TODO: Laura Ortiz phone
