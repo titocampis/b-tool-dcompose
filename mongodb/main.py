@@ -1,7 +1,7 @@
 from datetime import datetime
 from pymongo import MongoClient, ASCENDING
 
-import queries as q
+import mongodb.queries as q
 
 # Connect to MongoDB
 client = MongoClient("mongodb://localhost:27017/")
