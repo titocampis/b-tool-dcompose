@@ -23,3 +23,8 @@ The venv is stored in the repository, ff you are not going to use the venv anymo
 ```bash
 rm -rf b-tool-venv
 ```
+
+To deactivate the venv:
+```bash
+deactivate
+```
