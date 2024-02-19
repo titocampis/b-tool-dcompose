@@ -3,7 +3,7 @@ from pymongo import MongoClient, ASCENDING
 from pymongo.errors import OperationFailure
 import unicodedata as uni
 
-import mongodb.utilities as ut
+import utilities as ut
 
 def create_birthday_index(collection):
     '''Method to create the birthday index to notify it is a datetime (not enforce)'''
@@ -17,11 +17,13 @@ def create_birthday_index(collection):
     except OperationFailure as e:
         print(f"{ut.bcolors.FAIL}Error creating index: {e}{ut.bcolors.ENDC}")
 
+
 def get_indexes(collection):
     '''Method to return all the indexes in the collection'''
     indexes = collection.list_indexes()
     for index in indexes:
         print(index['name'],'-->', index)
+
 
 def insert_friend(collection, name, birthday, sex, alias, phone):
     '''Method to insert friend data into the collection'''
@@ -37,6 +39,7 @@ def insert_friend(collection, name, birthday, sex, alias, phone):
     if result.acknowledged: print(f"User [name={ut.bcolors.OKCYAN}{name}{ut.bcolors.ENDC}] has been correctly added to the collection.\n{user}")
     else: print(f"{ut.bcolors.FAIL}User [name={name}] has not been added to the collection.{ut.bcolors.ENDC}")
 
+
 def remove_friend_by_name(collection, name):
     '''Method to remove a friend by its name'''
     name = ut.remove_accents_and_title(name)
@@ -48,6 +51,7 @@ def remove_friend_by_name(collection, name):
     else:
         print(f"{ut.bcolors.FAIL}Document with [name={name}] not found.{ut.bcolors.ENDC}")
 
+
 def get_friends(collection):
     '''Method to check the entries in the collection'''
     # Find all documents in the collection
@@ -57,17 +61,6 @@ def get_friends(collection):
     for document in cursor:
         print(document)
 
-def get_friend_by_name(collection, name):
-    '''Method which returns a document searching by its name'''
-    result = collection.find_one({"name": ut.remove_accents_and_title(name)})
-    print(result)
-
-def get_friend_by_alias(collection, alias):
-    '''Method which returns a document searching by its alias'''
-    results = collection.find({"alias": ut.remove_accents_and_title(alias)})
-    # As it can be a string (more than one)
-    for result in results:
-        print(result)
 
 def update_by_name(collection, name, field, content):
     '''Method to update a field of a friend by its name'''

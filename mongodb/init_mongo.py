@@ -1,6 +1,6 @@
 from pymongo import MongoClient, ASCENDING
 
-import mongodb.queries as q
+import filters as q
 
 # Connect to MongoDB
 client = MongoClient("mongodb://localhost:27017/")
