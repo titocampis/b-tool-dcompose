@@ -3,7 +3,7 @@ import subprocess
 import utilities as ut
 
 # Command to copy the directory
-command = "sudo cp -r /var/lib/docker/volumes/b-tool-dcompose_mongodb_data ./backup-db"
+command = "rm -rf ./backup-db && sudo cp -r /var/lib/docker/volumes/b-tool-dcompose_mongodb_data ./backup-db"
 
 # Execute the command
 result = subprocess.run(command, shell=True)

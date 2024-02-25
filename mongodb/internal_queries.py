@@ -28,8 +28,10 @@ def get_indexes(collection):
 def insert_friend(collection, name, birthday, sex, alias, phone):
     '''Method to insert friend data into the collection'''
     
+    birthday, month = ut.check_birthday(birthday)
     user = {"name": ut.remove_accents_and_title(name), 
-            "birthday": ut.check_birthday(birthday), 
+            "birthday": birthday,
+            "month": month, 
             "sex": ut.check_sex(sex),
             "alias": ut.remove_accents_and_title(alias), 
             "phone": ut.check_phone(phone)}
@@ -92,3 +94,17 @@ def update_by_name(collection, name, field, content):
     elif update_result.modified_count == 1: print(f"Document [{ut.bcolors.OKCYAN}name={name}{ut.bcolors.ENDC}] updated successfully: [{ut.bcolors.OKCYAN}{field}={content}{ut.bcolors.ENDC}]")
     elif update_result.modified_count == 0: print(f"{ut.bcolors.WARNING}Nothing to modify, the document with [name={name}] already match the field [{field}={content}]{ut.bcolors.ENDC}")
     else: print(f"{ut.bcolors.FAIL}Something went wrong: {update_result}{ut.bcolors.ENDC}")
+    
+    
+    # With birthday we update 2 fields, birthday and month
+    if field == 'birthday':
+        update_operation2 = {"$set": {'month': ut.check_birthday(content)[1]}}
+        
+        # Update one document that matches the filter
+        update_result = collection.update_one(filter_query, update_operation2)
+        # Check if the update was successful
+        if not update_result.acknowledged: print(f"{ut.bcolors.FAIL}Something went wrong stablishing the connection{ut.bcolors.ENDC}]\n{update_result}")
+        elif update_result.matched_count == 0: print(f"{ut.bcolors.FAIL}Update failed, no documents matched the filter criteria: [name={name}]\n{update_result}{ut.bcolors.ENDC}")
+        elif update_result.modified_count == 1: print(f"Document [{ut.bcolors.OKCYAN}name={name}{ut.bcolors.ENDC}] updated successfully: [{ut.bcolors.OKCYAN}month={ut.check_birthday(content)[1]}{ut.bcolors.ENDC}]")
+        elif update_result.modified_count == 0: print(f"{ut.bcolors.WARNING}Nothing to modify, the document with [name={name}] already match the field [month={ut.check_birthday(content)[1]}]{ut.bcolors.ENDC}")
+        else: print(f"{ut.bcolors.FAIL}Something went wrong: {update_result}{ut.bcolors.ENDC}")
