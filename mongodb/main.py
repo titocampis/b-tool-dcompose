@@ -9,5 +9,6 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
-name = "anna ibañez godo"
-f.get_birthdays_by_month(collection, 'may')
+name = "helena valles teixido"
+f.get_birthdays_by_month(collection, 'march')
+#q.update_by_name(collection, name, 'birthday', datetime(1998, 3, 2, 0, 0))
