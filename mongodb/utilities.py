@@ -26,33 +26,21 @@ def check_birthday(birthday):
     if isinstance(birthday, datetime): 
         
         # Extract the month component
-        month = birthday.month
-        if month == 1:
-            month = 'january'
-        elif month == 2:
-            month = 'february'
-        elif month == 3:
-            month = 'march'
-        elif month == 4:
-            month = 'april'
-        elif month == 5:
-            month = 'may'
-        elif month == 6:
-            month = 'june'
-        elif month == 7:
-            month = 'july'
-        elif month == 8:
-            month = 'august'
-        elif month == 9:
-            month = 'september'
-        elif month == 10:
-            month = 'october'
-        elif month == 11:
-            month = 'november'
-        else:
-            month = 'december'
+        month_number = birthday.month
+        if month_number == 1: month = 'january'
+        elif month_number == 2: month = 'february'
+        elif month_number == 3: month = 'march'
+        elif month_number == 4: month = 'april'
+        elif month_number == 5: month = 'may'
+        elif month_number == 6: month = 'june'
+        elif month_number == 7: month = 'july'
+        elif month_number == 8: month = 'august'
+        elif month_number == 9: month = 'september'
+        elif month_number == 10: month = 'october'
+        elif month_number == 11: month = 'november'
+        else: month = 'december'
         
-        return birthday, month
+        return birthday, month, month_number, birthday.day
     else:
         print(f"{bcolors.FAIL}Invalid birthday value [{birthday}]. Birthday field must be a datetime object.{bcolors.ENDC}")
         exit(1)

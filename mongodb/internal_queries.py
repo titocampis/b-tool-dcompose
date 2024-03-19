@@ -28,10 +28,12 @@ def get_indexes(collection):
 def insert_friend(collection, name, birthday, sex, alias, phone):
     '''Method to insert friend data into the collection'''
     
-    birthday, month = ut.check_birthday(birthday)
+    birthday, month, month_number, day = ut.check_birthday(birthday)
     user = {"name": ut.remove_accents_and_title(name), 
             "birthday": birthday,
-            "month": month, 
+            "month": month,
+            "month_number": month_number,
+            "day": day, 
             "sex": ut.check_sex(sex),
             "alias": ut.remove_accents_and_title(alias), 
             "phone": ut.check_phone(phone)}
@@ -57,7 +59,7 @@ def remove_friend_by_name(collection, name):
 def get_friends(collection):
     '''Method to check the entries in the collection'''
     # Find all documents in the collection
-    cursor = collection.find({})
+    cursor = collection.find({}).sort([("month_number", ASCENDING), ("day", ASCENDING)])
 
     # Iterate over the cursor to print each document
     for document in cursor:

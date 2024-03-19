@@ -21,7 +21,7 @@ def get_friend_by_alias(collection, alias):
 def get_birthdays_by_month(collection, target_month):
     '''Method which returns the birthdays of a month'''
     print(ut.remove_accents_and_title(target_month))
-    results = collection.find({"month": target_month.lower()})
+    results = collection.find({"month": target_month.lower()}).sort("day", ASCENDING)
     # As it can be a string (more than one)
     for result in results:
         print(result)
