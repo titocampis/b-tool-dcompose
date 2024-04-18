@@ -9,5 +9,11 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
-name = "dia de la madre"
-f.get_birthdays_by_month(collection, 'june')
+name = "Ramon Garcia Cañabate"
+birthday = datetime(1995, 11, 25, 0, 0)
+sex = True
+alias = "Ramonxu"
+phone = "628658802"
+
+q.insert_friend(collection, name=name, birthday=birthday, sex=sex, alias=alias, phone=phone)
+q.get_friends(collection)

@@ -24,6 +24,14 @@ def get_indexes(collection):
     for index in indexes:
         print(index['name'],'-->', index)
 
+def insert_friend_dict(collection, data):
+    '''Method to insert a friend directly from raw data'''
+    
+    result = collection.insert_one(data)
+    # Check if the user has been added
+    if result.acknowledged: print(f"User [name={ut.bcolors.OKCYAN}{data['name']}{ut.bcolors.ENDC}] has been correctly added to the collection.\n{data['name']}")
+    else: print(f"{ut.bcolors.FAIL}User [name={data['name']}] has not been added to the collection.{ut.bcolors.ENDC}")
+
 
 def insert_friend(collection, name, birthday, sex, alias, phone):
     '''Method to insert friend data into the collection'''
@@ -71,9 +79,9 @@ def update_by_name(collection, name, field, content):
     # Check the field wanted to update
     field = field.lower()
     if field == 'name': content = ut.remove_accents_and_title(content)
-    elif field == 'birthday': ut.check_birthday(content)
-    elif field == 'phone': ut.check_phone(content)
-    elif field == 'sex': ut.check_sex(content)
+    elif field == 'birthday': content, month, month_number, birthday_day = ut.check_birthday(content)
+    elif field == 'phone': content = ut.check_phone(content)
+    elif field == 'sex': content = ut.check_sex(content)
     elif field == 'alias': content = ut.remove_accents_and_title(content)
     else:
         print(f"{ut.bcolors.FAIL}Update failed, invalid field [{field}], choose one valid [birthday, phone, sex, alias]")
@@ -97,11 +105,12 @@ def update_by_name(collection, name, field, content):
     elif update_result.modified_count == 0: print(f"{ut.bcolors.WARNING}Nothing to modify, the document with [name={name}] already match the field [{field}={content}]{ut.bcolors.ENDC}")
     else: print(f"{ut.bcolors.FAIL}Something went wrong: {update_result}{ut.bcolors.ENDC}")
     
-    
-    # With birthday we update 2 fields, birthday and month
+    # If the field is birthday, we need to update more things
     if field == 'birthday':
-        update_operation2 = {"$set": {'month': ut.check_birthday(content)[1]}}
-        
+        update_operation2 = {
+            "$set": {'month': month, 'month_number': month_number,'day': birthday_day}
+        }
+            
         # Update one document that matches the filter
         update_result = collection.update_one(filter_query, update_operation2)
         # Check if the update was successful

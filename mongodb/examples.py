@@ -13,6 +13,7 @@ name = "jose antonio campos valencia"
 alias = "tito"
 
 q.insert_friend(collection, name=name, birthday=datetime(1972, 6, 1, 0, 0), sex=True, alias='Ivan', phone='000000000')
+q.insert_friend_dict(collection, {'name': 'Mar Estanyol Zabala', 'birthday': datetime(1997, 3, 17, 0, 0), 'sex': False, 'alias': 'Marseta', 'phone': '637249346', 'month': 'march', 'day': 17, 'month_number': 3})
 q.update_by_name(collection, name, 'sex', False)
 q.update_by_name(collection, name, 'birthday', datetime(2002, 7, 8, 0, 0))
 q.update_by_name(collection, name, 'phone', '605947108')
