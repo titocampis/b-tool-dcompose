@@ -10,4 +10,4 @@ db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
 name = "dia de la madre"
-q.get_friends(collection)
+f.get_birthdays_by_month(collection, 'june')
