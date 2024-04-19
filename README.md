@@ -1,3 +1,4 @@
+# How to create the virtual environment
 1. Create the virtual environment:
 ```bash
 python3 -m venv b-tool-venv
@@ -29,4 +30,5 @@ To deactivate the venv:
 deactivate
 ```
 
-# TODO: Implement while in override_database
+# How to override the database
+You need to execute the script and change the owner of the files to root
