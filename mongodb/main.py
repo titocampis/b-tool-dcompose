@@ -15,4 +15,7 @@ sex = True
 alias = "Ramonxu"
 phone = "628658802"
 
-q.get_friends(collection)
+friends = f.get_all_birthdays_sorted_by_month(collection)
+print(friends['december'])
+print("================")
+print(f.get_birthdays_by_month(collection, 'december'))
