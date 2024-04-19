@@ -15,5 +15,4 @@ sex = True
 alias = "Ramonxu"
 phone = "628658802"
 
-q.insert_friend(collection, name=name, birthday=birthday, sex=sex, alias=alias, phone=phone)
 q.get_friends(collection)
