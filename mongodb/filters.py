@@ -5,6 +5,13 @@ import unicodedata as uni
 
 import mongodb.utilities as ut
 
+def get_friends(collection):
+    '''Method to check the entries in the collection'''
+    # Find all documents in the collection
+    cursor = collection.find({}).sort([("month_number", ASCENDING), ("day", ASCENDING)])
+
+    return list(cursor)
+
 def get_friend_by_name(collection, name):
     '''Method which returns a document searching by its name'''
     result = collection.find_one({"name": ut.remove_accents_and_title(name)})

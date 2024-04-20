@@ -3,7 +3,7 @@ from pymongo import MongoClient, ASCENDING
 from pymongo.errors import OperationFailure
 import unicodedata as uni
 
-import utilities as ut
+import mongodb.utilities as ut
 
 def create_birthday_index(collection):
     '''Method to create the birthday index to notify it is a datetime (not enforce)'''
@@ -62,16 +62,6 @@ def remove_friend_by_name(collection, name):
         print(f"Document with [{ut.bcolors.OKCYAN}name={name}{ut.bcolors.ENDC}] deleted successfully.")
     else:
         print(f"{ut.bcolors.FAIL}Document with [name={name}] not found.{ut.bcolors.ENDC}")
-
-
-def get_friends(collection):
-    '''Method to check the entries in the collection'''
-    # Find all documents in the collection
-    cursor = collection.find({}).sort([("month_number", ASCENDING), ("day", ASCENDING)])
-
-    # Iterate over the cursor to print each document
-    for document in cursor:
-        print(document)
 
 
 def update_by_name(collection, name, field, content):

@@ -28,24 +28,19 @@
             </div>
         </div>
     </div>
-    <h2>January</h2>
-        <ul>
-            {% for birthday in friends['january'] %}
-                <p>{{ birthday }}</p>
-            {% endfor %}
-        </ul>
-    <h2>February</h2>
-    <ul>
-        {% for birthday in friends['february'] %}
-            <p>{{ birthday }}</p>
+    {% for month in friends.keys() %}
+    <div class="container-fluid ml-3 mb-5">
+        <h1 class="display-4">{{ month.title() }}</h1>
+        <div class="container-fluid ml-0 pl-0 mt-4">
+        {% for birthday in friends[month] %}
+        <div class="container-fluid ml-0 pl-0">
+            <p>{{ birthday['birthday'].strftime("%B %d") }}: {{ birthday['name']  }}</p>
+        </div>
         {% endfor %}
-    </ul>
-    <h2>March</h2>
-    <ul>
-        {% for birthday in friends['march'] %}
-            <p>{{ birthday }}</p>
-        {% endfor %}
-    </ul>
+        </div>
+    </div>
+    {% endfor %}
+
   </body>
 
 </html>

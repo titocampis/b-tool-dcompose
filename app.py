@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from pymongo import MongoClient, ASCENDING
+from pymongo import MongoClient
 
 import mongodb.filters as mongodb_f
 
@@ -23,7 +23,7 @@ collection = db["friends_collection"]
 #     print(month)
 #     return render_template('base.html', month=month)
 
-@app.route('/list/')
+@app.route('/')
 def render_list():
     '''Render the main page'''
     friends = mongodb_f.get_all_birthdays_sorted_by_month(collection)

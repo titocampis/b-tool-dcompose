@@ -1,10 +1,10 @@
 from datetime import datetime
-from pymongo import MongoClient, ASCENDING
+from pymongo import MongoClient
 
-import filters as f
-import internal_queries as q
+import mongodb.filters as f
+import mongodb.internal_queries as q
 
-# Connect to MongoDB
+# Defining database
 client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
@@ -16,6 +16,6 @@ alias = "Ramonxu"
 phone = "628658802"
 
 friends = f.get_all_birthdays_sorted_by_month(collection)
-print(friends['december'])
-print("================")
-print(f.get_birthdays_by_month(collection, 'december'))
+print(friends['january'], "\n=========================================")
+for elem in friends.keys():
+    print(friends[elem])
