@@ -34,7 +34,7 @@ deactivate
 You need to execute the script [mongodb/override_database.py](mongodb/override_database.py) and change the owner of the files to root
 
 # Next Steps
-1. Sort the project structure and folders
+1. :white_check_mark: Sort the project structure and folders
 2. Finish the GUI
 3. Use tha marlot email to send you notifications each 1 of the month of the birthdays of the month
 4. Test python crons and play with them

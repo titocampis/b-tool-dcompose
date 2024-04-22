@@ -24,16 +24,16 @@
     <div class="container">
         <div class="row justify-content-center mt-3"> <!--mt-3 = Margin Top 3 Units -->
             <div class="col-auto">
-                <img src="{{ url_for('static', filename='img/birthdays_tool.png') }}" class="img-fluid" alt="Centered Image">
+                <img src="{{ url_for('static', filename='img/birthdays_tool.png') }}" class="img-fluid" alt="Centered Image" style="margin-bottom: 30px;">
             </div>
         </div>
     </div>
     {% for month in friends.keys() %}
     <div class="container-fluid ml-3 mb-5">
-        <h1 class="display-4">{{ month.title() }}</h1>
+      <h2 class="general-smtitle">{{ month.title() }}</h2>
         <div class="container-fluid ml-0 pl-0 mt-4">
         {% for birthday in friends[month] %}
-        <div class="container-fluid ml-0 pl-0">
+        <div class="container-fluid ml-0 pl-0" style="font-size: 17px;">
             <p>{{ birthday['birthday'].strftime("%B %d") }}: {{ birthday['name']  }}</p>
         </div>
         {% endfor %}
