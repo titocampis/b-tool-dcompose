@@ -1,0 +1,50 @@
+{
+    "aquarius": {
+        "start": "1-20",
+        "end": "2-18"
+    },
+    "pisces": {
+        "start": "2-19",
+        "end": "3-20"
+    },
+    "aries": {
+        "start": "3-21",
+        "end": "4-19"
+    },
+    "taurus": {
+        "start": "4-20",
+        "end": "5-20"
+    },
+    "gemini": {
+        "start": "5-21",
+        "end": "6-20"
+    },
+    "cancer": {
+        "start": "6-21",
+        "end": "7-22"
+    },
+    "leo": {
+        "start": "7-23",
+        "end": "8-22"
+    },
+    "virgo": {
+        "start": "8-23",
+        "end": "9-22"
+    },
+    "libra": {
+        "start": "9-22",
+        "end": "10-22"
+    },
+    "scorpio": {
+        "start": "10-23",
+        "end": "11-21"
+    },
+    "sagittarius": {
+        "start": "11-22",
+        "end": "12-21"
+    },
+    "capricorn": {
+        "start": "12-22",
+        "end": "1-19"
+    }
+}

@@ -5,6 +5,10 @@ import json
 import matplotlib.pyplot as plt
 from mongodb import filters as mongodb_f
 
+################################ MAIN OF MONGODB ################################ 
+# This main is an example of how to use mongodb module 
+################################################################################# 
+
 # Defining database
 client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
