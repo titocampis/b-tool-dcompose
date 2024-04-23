@@ -1,8 +1,7 @@
 from datetime import datetime
 from pymongo import MongoClient
 
-import mongodb.filters as f
-import mongodb.internal_queries as q
+from mongodb import filters as f, internal_queries as q
 
 ################################ MAIN OF MONGODB ################################ 
 # This main is an example of how to use mongodb module 

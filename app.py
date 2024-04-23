@@ -1,19 +1,32 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
+import os
 
-import mongodb.filters as mongodb_f
-
-# Defining the flask app name
-app = Flask(__name__)
+from functionalities import send_mail as sm, utilities as ut
+from mongodb import filters as mongodb_f
 
 # Variables
-WS_HOST = "0.0.0.0"
+receiver_mail = 'marlot.vital@gmail.com'
+
+## If docker compose
+# WS_HOST = os.environ.get('WS_HOST')
+# WS_PORT = os.environ.get('WS_PORT')
+
+## If locally
+WS_HOST = '0.0.0.0'
 WS_PORT = 8080
+
+# Retrieve secrets
+sender_mail_username = ut.retrieve_secret(os.environ.get('SECRET_MAIL_USERNAME_FILE'))
+sender_mail_password = ut.retrieve_secret(os.environ.get('SECRET_MAIL_PASSWORD_FILE'))
 
 # MongoDB database info
 client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
+
+# Defining the flask app name
+app = Flask(__name__)
 
 # Paths
 @app.route('/')
