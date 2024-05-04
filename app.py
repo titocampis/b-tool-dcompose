@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import os
 
 from functionalities import send_mail as sm, utilities as ut
-from mongodb import filters as mongodb_f
+from mongodb import filters as mongodb_f, utilities as mut
 
 # Variables
 receiver_mail = 'marlot.vital@gmail.com'
@@ -33,7 +33,7 @@ app = Flask(__name__)
 def render_list():
     '''Render the main page'''
     friends = mongodb_f.get_all_birthdays_sorted_by_month(collection)
-    return render_template('base.html', friends=friends)
+    return render_template('base.html', friends=friends, calculate_old=mut.calculate_old)
 
 # Paths
 # @app.route('/<string:month>/')

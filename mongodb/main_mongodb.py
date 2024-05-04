@@ -2,6 +2,7 @@ from datetime import datetime
 from pymongo import MongoClient
 
 from mongodb import filters as f, internal_queries as q
+from mongodb import utilities as ut
 
 ################################ MAIN OF MONGODB ################################ 
 # This main is an example of how to use mongodb module 
@@ -18,8 +19,5 @@ def main_mongodb():
     sex = True
     alias = "Ramonxu"
     phone = "628658802"
-
-    friends = f.get_all_birthdays_sorted_by_month(collection)
-    print(friends['january'], "\n=========================================")
-    for elem in friends.keys():
-        print(friends[elem])
+    print(f.get_friend_by_name(collection, 'maria lot pato escribano')['birthday'])
+    print(ut.calculate_old(f.get_friend_by_name(collection, 'maria lot pato escribano')['birthday']))

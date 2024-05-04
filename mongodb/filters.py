@@ -6,29 +6,20 @@ import unicodedata as uni
 import mongodb.utilities as ut
 
 def get_friends(collection):
-    '''Method to check the entries in the collection'''
-    # Find all documents in the collection
-    cursor = collection.find({}).sort([("month_number", ASCENDING), ("day", ASCENDING)])
-
-    return list(cursor)
+    '''Method which returns all the entries in the collection as list'''
+    return list(collection.find({}).sort([("month_number", ASCENDING), ("day", ASCENDING)]))
 
 def get_friend_by_name(collection, name):
     '''Method which returns a document searching by its name'''
-    result = collection.find_one({"name": ut.remove_accents_and_title(name)})
-    return list(result)
-
+    return collection.find_one({"name": ut.remove_accents_and_title(name)})
 
 def get_friend_by_alias(collection, alias):
-    '''Method which returns a document searching by its alias'''
-    results = collection.find({"alias": ut.remove_accents_and_title(alias)})
-    # As it can be more than one
-    return list(results)
+    '''Method which returns a document searching by its alias (it can be more than one)'''
+    return list(collection.find({"alias": ut.remove_accents_and_title(alias)}))
         
 def get_birthdays_by_month(collection, target_month):
-    '''Method which returns the birthdays of a month'''
-    # print(ut.remove_accents_and_title(target_month))
-    results = collection.find({"month": target_month.lower()}).sort("day", ASCENDING)
-    return list(results)
+    '''Method which returns the birthdays of a month as list'''
+    return list(collection.find({"month": target_month.lower()}).sort("day", ASCENDING))
 
 def get_all_birthdays_sorted_by_month(collection):
     '''Method which returns all the birthdays sorted by month in a python dict'''

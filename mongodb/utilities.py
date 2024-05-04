@@ -63,3 +63,22 @@ def check_phone(phone):
     else:
         print(f"{bcolors.FAIL}Invalid phone value [{phone}]. Phone field must be a number of 9 digits.{bcolors.ENDC}")
         exit(1)
+
+def calculate_old(birthday):
+    '''Method to calculate how many years a person is going to have on his birthday'''
+
+    # Check if the birthday is datetime
+    if isinstance(birthday, datetime):
+        
+        # Calculate the age
+        today = datetime.now()
+        age = today.year - birthday.year
+
+        # Make the adjustmen depending on day and month - Not used because its not his birthday today
+        # if today.month < birthday.month or (today.month == birthday.month and today.day < birthday.day):
+        #     age -= 1
+
+        return age
+    else:
+        print(f"{bcolors.FAIL}Invalid birthday value [{birthday}]. Birthday field must be a datetime object.{bcolors.ENDC}")
+        exit(1)

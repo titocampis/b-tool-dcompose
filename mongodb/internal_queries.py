@@ -103,6 +103,7 @@ def update_by_name(collection, name, field, content):
             
         # Update one document that matches the filter
         update_result = collection.update_one(filter_query, update_operation2)
+        
         # Check if the update was successful
         if not update_result.acknowledged: print(f"{ut.bcolors.FAIL}Something went wrong stablishing the connection{ut.bcolors.ENDC}]\n{update_result}")
         elif update_result.matched_count == 0: print(f"{ut.bcolors.FAIL}Update failed, no documents matched the filter criteria: [name={name}]\n{update_result}{ut.bcolors.ENDC}")
