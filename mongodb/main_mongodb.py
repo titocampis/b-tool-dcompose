@@ -19,5 +19,4 @@ def main_mongodb():
     sex = True
     alias = "Ramonxu"
     phone = "628658802"
-    print(f.get_friend_by_name(collection, 'maria lot pato escribano')['birthday'])
-    print(ut.calculate_old(f.get_friend_by_name(collection, 'maria lot pato escribano')['birthday']))
+    # q.update_by_name(collection, 'abel', 'birthday', datetime(1999, 8, 1))

@@ -1,6 +1,9 @@
 # version: '3.7'
 
 services:
+  cron:
+    image: cron-container:latest
+    container_name: cron-container
   mongodb:
     image: mongo:latest
     container_name: mongodb

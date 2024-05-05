@@ -34,7 +34,7 @@
         <div class="container-fluid ml-0 pl-0 mt-4">
         {% for birthday in friends[month] %}
         <div class="container-fluid ml-0 pl-0" style="font-size: 17px;">
-            <p>{{ birthday['birthday'].strftime("%B %d") }}: {{ birthday['name'] }} ({{ calculate_old(birthday['birthday'])  }} años)</p>
+            <p>{{ birthday['birthday'].strftime("%B %d") }}: {{ birthday['name'] }} ({{ calculate_old(birthday['birthday'])  }} years)</p>
         </div>
         {% endfor %}
         </div>
