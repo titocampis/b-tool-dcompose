@@ -1,9 +1,6 @@
-from datetime import datetime
-from pymongo import MongoClient, ASCENDING
-from pymongo.errors import OperationFailure
-import unicodedata as uni
+from pymongo import ASCENDING
 
-import mongodb.utilities as ut
+import utils.utilities as ut
 
 def get_friends(collection):
     '''Method which returns all the entries in the collection as list'''

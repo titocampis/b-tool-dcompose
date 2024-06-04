@@ -1,7 +1,7 @@
 from pymongo import MongoClient
-
 import json
 import matplotlib.pyplot as plt
+
 from mongodb import filters as mongodb_f
 from horoscope import horoscope_study as hs
 

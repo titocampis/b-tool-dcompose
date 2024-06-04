@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 import os
 
-from functionalities import send_mail as sm, utilities as ut
-from mongodb import filters as mongodb_f, utilities as mut
+from mongodb import filters as mongodb_f
+from utils import utilities as mut
+from utils import send_mail as sm
 
 # Variables
 receiver_mail = 'marlot.vital@gmail.com'
@@ -17,8 +18,8 @@ WS_HOST = '0.0.0.0'
 WS_PORT = 8080
 
 # Retrieve secrets
-sender_mail_username = ut.retrieve_secret(os.environ.get('SECRET_MAIL_USERNAME_FILE'))
-sender_mail_password = ut.retrieve_secret(os.environ.get('SECRET_MAIL_PASSWORD_FILE'))
+sender_mail_username = mut.retrieve_secret(os.environ.get('SECRET_MAIL_USERNAME_FILE'))
+sender_mail_password = mut.retrieve_secret(os.environ.get('SECRET_MAIL_PASSWORD_FILE'))
 
 # MongoDB database info
 client = MongoClient("mongodb://localhost:27017/")

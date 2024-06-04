@@ -1,6 +1,6 @@
 import subprocess
 
-import utilities as ut
+import utils.utilities as ut
 
 # Command to copy the directory
 command = "rm -rf /var/lib/docker/volumes/b-tool-dcompose_mongodb_data && sudo cp -r ./backup-db /var/lib/docker/volumes/b-tool-dcompose_mongodb_data"

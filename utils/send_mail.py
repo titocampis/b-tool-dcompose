@@ -1,12 +1,11 @@
+from datetime import datetime
 from flask import jsonify
 from flask_mail import Mail, Message
 
-def send_email(sender_mail_username, receiver_mail_username, subject, data_name, data_birthday, data_sex):
-    try:
+import utils.utilities as mut
 
-        # Check if any required field is empty
-        if not subject or not data_name or not data_birthday or not data_sex:
-            raise ValueError('Missing required fields')
+def send_mail(sender_mail_username:str, receiver_mail_username:str, subject:str, data_alias:str, data_birthday:datetime, data_sex:bool):
+    try:
 
         # Validate email formats
         if '@' not in sender_mail_username:
@@ -15,7 +14,7 @@ def send_email(sender_mail_username, receiver_mail_username, subject, data_name,
             raise ValueError('Invalid receiver email format')
         
         # Calculate years
-        # years =
+        years = mut.calculate_old(data_birthday)
         
         # Define the message to send
         mail_message = Message(
@@ -24,13 +23,12 @@ def send_email(sender_mail_username, receiver_mail_username, subject, data_name,
                 recipients = [str(receiver_mail_username)])
         
         # Define body
-        mail_message.body = f"Muchísimas felicidades {data_name}!! Espero que pases un muy feliz {years} día de cumpleaños, un fuerte abrazo <3"
-        
-        # Send the email
-        # mail.send(mail_message)
+        mail_message.body = f"Muchísimas felicidades {data_alias}!! Espero que pases un gran día, disfruta mucho de tus {years}.\nFeliz cumpleaños y un fuerte abrazo! <3"
 
-        return jsonify({'message': 'Email sent successfully'}), 200
+        mail.send(mail_message)
+
+        # return jsonify({'message': 'Email sent successfully'}), 200
     
     # If the message cannot be sent
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print("Falle", e)

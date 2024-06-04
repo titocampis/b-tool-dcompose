@@ -1,9 +1,7 @@
-from datetime import datetime
-from pymongo import MongoClient, ASCENDING
+from pymongo import ASCENDING
 from pymongo.errors import OperationFailure
-import unicodedata as uni
 
-import mongodb.utilities as ut
+import utils.utilities as ut
 
 def create_birthday_index(collection):
     '''Method to create the birthday index to notify it is a datetime (not enforce)'''
