@@ -1,41 +1,55 @@
-# How to create the virtual environment
-1. Create the virtual environment:
+# Birthday Tool with Docker Compose
+
+The idea of this mini project is to be the best friend of the world!! One of the bigest problems of a good friend is always remember the birthdays of your friends... But being honest, it is not always possible. That's why I developed this tool, to run into a raspberry pi (or wherever because it is implemented in docker).
+
+For this, we will have:
+1. A docker container running a mongodb database with all the birthdays of my friends
+2. Another docker container with 2 cronjobs:
+    - 1 job executed each day at 00:00 to check if it is the birthday of some of your friends, and in case it is, send a mail to my mailbox notifying me about it
+    - 1 job executed the 1st day of each month to check and send all the birthdays of the month to my mailbox
+
+## Database 
+
+### Docker Build
+It does not need to build anything because I use the default mongodb image
+
+### Docker Compose Config
+It can be checked on [docker-compose.yml](docker-compose.yml)
+
+### Docker Compose Up
 ```bash
-python3 -m venv b-tool-venv
+docker compose up -d mongodb
 ```
 
-2. Activate the virtual environment:
+### Execute actions once the database is running
+
+To execute actions on the database, you should execute the python script [main_db.py](main_db.py).
+
+You can retrieve ideas of how to use it checking [mongodb/examples.py](mongodb/examples.py)
+
+#### Make queries on the database
+
+You can insert friends by different ways, update them, remove them... Check all the methods available in [mongodb/internal_queries.py](mongodb/internal_queries.py)
+
+#### Retrieve data from database
+
+You can get all friends, retrieve a friend by its name, retrieve a friend by its alias get friends with birthday in specific Check all the methods available in [mongodb/filters.py](mongodb/filters.py)month... 
+
+### How to backup the database?
 ```bash
-source b-tool-venv/bin/activate
+python3 mongodb/backup_database.py
 ```
+You can check the content of the file: [mongodb/backup_database](mongodb/backup_database)
 
-3. Install the requirements:
-```bash
-pip install -r requirements.txt
-```
-
-4. Run the application
-```bash
-python3 ....
-```
-
-The venv is stored in the repository, if you are not going to use the venv anymore, do: 
-
-```bash
-rm -rf b-tool-venv
-```
-
-To deactivate the venv:
-```bash
-deactivate
-```
-
-# How to override the database
+### How to override the database with the backup
 You need to execute the script [mongodb/override_database.py](mongodb/override_database.py) and change the owner of the files to root
 
 # Next Steps
-1. :white_check_mark: Sort the project structure and folders
-2. Finish the GUI
-3. Use tha marlot email to send you notifications each 1 of the month of the birthdays of the month
-4. Test python crons and play with them
-5. Implement it as a cron job
+| Status | Task |
+|----------|----------|
+| :hourglass_flowing_sand: | Define the function check_daily_birthdays.py |
+| :hourglass_flowing_sand: | Define the function check_monthly_birthdays.py |
+| :hourglass_flowing_sand: | Check how to do with the secrets and docker compose |
+| :hourglass_flowing_sand: | Modify the repository for the cronjob |
+| :hourglass_flowing_sand: | Document the project in this README.md |
+
