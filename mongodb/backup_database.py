@@ -1,15 +1,25 @@
+import os
 import subprocess
 
-import mongodb.utilities as ut
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 # Command to copy the directory
-command = "sudo cp -r /var/lib/docker/volumes/b-tool-dcompose_mongodb_data /home/acampos/"
+command = "sudo rm -rf backup-db && sudo cp -r /var/lib/docker/volumes/b-tool-dcompose_mongodb_data/ backup-db/"
 
 # Execute the command
 result = subprocess.run(command, shell=True)
 
 # Check if the command executed successfully
 if result.returncode == 0:
-    print(f"{ut.bcolors.OKGREEN}Databse backed up successfully on /home/acampos/b-tool-dcompose_mongodb_data{ut.bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}Database backed up successfully on in {os.getcwd()}/backup-db{bcolors.ENDC}")
 else:
-    print(f"{ut.bcolors.FAIL}Something went wrong backing up the database in /home/acampos/b-tool-dcompose_mongodb_data\n{result}{ut.bcolors.ENDC}")
+    print(f"{bcolors.FAIL}Something went wrong backing up the database in {os.getcwd()}/backup-db\n{result}{bcolors.ENDC}")

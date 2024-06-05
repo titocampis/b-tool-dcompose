@@ -1,0 +1,29 @@
+# version: '3.7'
+
+services:
+  cron:
+    image: cron-container:latest
+    container_name: cron-container
+    restart: always
+    environment:
+      SECRET_MAIL_USERNAME_FILE: ${SECRET_MAIL_USERNAME_FILE} # Read from .env
+      SECRET_MAIL_PASSWORD_FILE: ${SECRET_MAIL_PASSWORD_FILE} # Read from .env
+    secrets:
+      - secret_mail_username
+      - secret_mail_password
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - btool_network
+
+networks:
+  btool_network:
+
+volumes:
+  mongodb_data:

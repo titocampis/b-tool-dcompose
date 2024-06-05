@@ -1,1 +1,5 @@
+__pycache__
+b-tool-venv
+backup-db
+secret_*
 test.py
