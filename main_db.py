@@ -13,10 +13,4 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
-name = "Ramon Garcia Cañabate"
-birthday = datetime(1995, 11, 25, 0, 0)
-sex = True
-alias = "Ramonxu"
-phone = "628658802"
-# q.update_by_name(collection, 'abel', 'birthday', datetime(1999, 8, 1))
-print(f.get_friends(collection))
+# Execute here your query

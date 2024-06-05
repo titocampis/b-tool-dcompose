@@ -66,25 +66,51 @@ Docker container with 2 cronjobs scheduled
 We can check the configuration of the image in [Dockerfile](Dockerfile)
 
 ```bash
-docker build -t cron-container
+docker build -t cron-container .
 ```
+
+> :paperclip: **NOTE:** [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
 
 ### Docker Compose Config
 It can be checked on [docker-compose.yml](docker-compose.yml)
 
-It should have the secrets from the email sender account.
+
+### Secrets
+
+In order to export the `mail_username` and the `mail_password` from the `mail service` we use **docker secrets**. So before running the application, you should fulfill the content of the following files:
+
+- `secret_mail_username.conf`
+- `secret_mail_password.conf`
+
 
 ### Cronjobs Container Run
 ```bash
 docker compose up -d cron
 ```
 
+### Local Tests
+Modify the desired script:
+- [check_daily_birthdays.py](check_daily_birthdays.py)
+- [check_monthly_birthdays.py](check_monthly_birthdays.py)
+
+```python
+# Uncomment for local Executions
+sender_mail_username = ''
+sender_mail_password = ''
+```
+
+Then run the application
+```bash
+python3 check_daily_birthdays.py
+```
+
+
 ## Next Steps
 | Status | Task |
 |----------|----------|
-| :hourglass_flowing_sand: | Define the function check_daily_birthdays.py |
-| :hourglass_flowing_sand: | Define the function check_monthly_birthdays.py |
-| :hourglass_flowing_sand: | Check how to do with the secrets and docker compose |
-| :hourglass_flowing_sand: | Modify the repository for the cronjob |
-| :hourglass_flowing_sand: | Document the project in this README.md |
-
+| :white_check_mark: | Define the function check_daily_birthdays.py |
+| :white_check_mark: | Define the function check_monthly_birthdays.py |
+| :white_check_mark: | Check how to do with the secrets and docker compose |
+| :hourglass_flowing_sand: | Check if .env is needed on the docker image |
+| :hourglass_flowing_sand: | Do the repository for ansible-raspberry pi |
+| :hourglass_flowing_sand: | Test to run the scripts using docker-compose (without sending the email, just printing the value of the secrets) |

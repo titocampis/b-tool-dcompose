@@ -27,7 +27,7 @@ def insert_friend_dict(collection, data):
     
     result = collection.insert_one(data)
     # Check if the user has been added
-    if result.acknowledged: print(f"User [name={ut.bcolors.OKCYAN}{data['name']}{ut.bcolors.ENDC}] has been correctly added to the collection.\n{data['name']}")
+    if result.acknowledged: print(f"User [name={ut.bcolors.OKCYAN}{data['name']}{ut.bcolors.ENDC}] has been correctly added to the collection.")
     else: print(f"{ut.bcolors.FAIL}User [name={data['name']}] has not been added to the collection.{ut.bcolors.ENDC}")
 
 
