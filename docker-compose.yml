@@ -5,9 +5,10 @@ services:
     image: cron-container:latest
     container_name: cron-container
     restart: always
-    environment:
-      SECRET_MAIL_USERNAME_FILE: ${SECRET_MAIL_USERNAME_FILE} # Read from .env
-      SECRET_MAIL_PASSWORD_FILE: ${SECRET_MAIL_PASSWORD_FILE} # Read from .env
+    # No needed because the cron has its own enviroment
+    # environment: 
+    #   SECRET_MAIL_USERNAME_FILE: ${SECRET_MAIL_USERNAME_FILE} # Read from .env
+    #   SECRET_MAIL_PASSWORD_FILE: ${SECRET_MAIL_PASSWORD_FILE} # Read from .env
     secrets:
       - secret_mail_username
       - secret_mail_password
@@ -24,6 +25,12 @@ services:
 
 networks:
   btool_network:
+
+secrets:
+  secret_mail_username:
+    file: secret_mail_username.conf
+  secret_mail_password:
+    file: secret_mail_password.conf
 
 volumes:
   mongodb_data:

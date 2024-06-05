@@ -7,6 +7,9 @@ RUN set -x && \
     apt-get install -y cron python3 python3-pip && \
     apt-get clean
 
+# Set the working directory inside the container
+WORKDIR /app
+
 # Copy crontab file
 COPY crontab .
 
@@ -17,11 +20,10 @@ RUN chmod 0755 crontab && \
     crontab crontab && \
     touch /var/log/cron.log
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the python files
-COPY test.py test.py
+# Copy the needed files
+COPY utils/ utils/
+COPY check_daily_birthdays.py check_daily_birthdays.py
+COPY check_monthly_birthdays.py check_monthly_birthdays.py
 
 # # Install python modules
 # RUN pip install -r requirements.txt

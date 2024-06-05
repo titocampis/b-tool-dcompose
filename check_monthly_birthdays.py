@@ -1,5 +1,4 @@
 from datetime import datetime
-import os
 from pymongo import MongoClient
 
 from mongodb import filters as f
@@ -15,13 +14,8 @@ current_month = today.strftime("%B")
 
 print(f"[{today}]: Starting the monthly [{current_month}] birthday checking")
 
-# Uncomment for local Executions
-# sender_mail_username = ''
-# sender_mail_password = ''
-
 # Retrieve secrets
-# sender_mail_username = ut.retrieve_secret(os.environ.get('SECRET_MAIL_USERNAME_FILE'))
-# sender_mail_password = ut.retrieve_secret(os.environ.get('SECRET_MAIL_PASSWORD_FILE'))
+sender_mail_username, sender_mail_password = ut.retrieve_secrets()
 
 # Configure email
 sender_name = 'B-Tool Bot'

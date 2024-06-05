@@ -89,21 +89,26 @@ docker compose up -d cron
 ```
 
 ### Local Tests
-Modify the desired script:
-- [check_daily_birthdays.py](check_daily_birthdays.py)
-- [check_monthly_birthdays.py](check_monthly_birthdays.py)
+:one: Fulfill the following files with the sensitive data:
+- `secret_mail_username.conf`
+- `secret_mail_password.conf`
 
-```python
-# Uncomment for local Executions
-sender_mail_username = ''
-sender_mail_password = ''
+:two: Run the following on your terminal
+```bash
+export SECRET_MAIL_USERNAME_FILE="./secret_mail_username.conf" && \
+export SECRET_MAIL_PASSWORD_FILE="./secret_mail_password.conf"
 ```
 
-Then run the application
+:three: Run the application
 ```bash
 python3 check_daily_birthdays.py
 ```
 
+> :paperclip: It is recommended to use a python virtual environment
+> - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
+> - Activate it: ```source b-tool-venv/bin/activate```
+> - Install the requirements on it: ```pip install -r requirements_mongodb.txt```
+> - To deactivate it: ```deactivate``` 
 
 ## Next Steps
 | Status | Task |
@@ -111,6 +116,8 @@ python3 check_daily_birthdays.py
 | :white_check_mark: | Define the function check_daily_birthdays.py |
 | :white_check_mark: | Define the function check_monthly_birthdays.py |
 | :white_check_mark: | Check how to do with the secrets and docker compose |
-| :hourglass_flowing_sand: | Check if .env is needed on the docker image |
+| :white_check_mark: | Check if .env is needed on the docker image |
+| :white_check_mark: | Test to run the scripts using docker-compose (without sending the email, just printing the value of the secrets) |
+| :hourglass_flowing_sand: | Test the cronjobs on your laptop |
 | :hourglass_flowing_sand: | Do the repository for ansible-raspberry pi |
-| :hourglass_flowing_sand: | Test to run the scripts using docker-compose (without sending the email, just printing the value of the secrets) |
+| :hourglass_flowing_sand: | Clone the repository and test it on the raspberry |
