@@ -26,9 +26,9 @@ container_name = 'mongodb'
 folder = f"./backups/{db_name}-{datetime.today().strftime('%m-%d-%Y')}"
 
 # Commands
-command_docker_dump = f"docker exec -it {container_name} mongodump --db {db_name} --out ."
-command_docker_cp = f"docker cp {container_name}:/{db_name} {folder}"
-command_docker_rm = f"docker exec -it {container_name} rm -rf {db_name}"
+command_docker_dump = f"docker exec -it {container_name} mongodump --db {db_name} --out /tmp/"
+command_docker_cp = f"docker cp {container_name}:/tmp/{db_name} {folder}"
+command_docker_rm = f"docker exec -it {container_name} rm -rf /tmp/{db_name}"
 
 ############################################################################################
 ############                              Methods                              #############

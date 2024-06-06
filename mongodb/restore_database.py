@@ -27,10 +27,10 @@ container_name = 'mongodb'
 folder = f"./backups/{db_name}-06-06-2024"
 
 # Commands
-command_docker_cp = f"docker cp {folder} {container_name}:/{db_name} "
+command_docker_cp = f"docker cp {folder} {container_name}:/tmp/{db_name} "
 # mongorestore --db <database_name> <path/to/dump/file>
-command_docker_restore = f"docker exec -it {container_name} mongorestore --db {db_name} {db_name}"
-command_docker_rm = f"docker exec -it {container_name} rm -rf {db_name}"
+command_docker_restore = f"docker exec -it {container_name} mongorestore --db {db_name} /tmp/{db_name}"
+command_docker_rm = f"docker exec -it {container_name} rm -rf /tmp/{db_name}"
 
 ############################################################################################
 ############                              Methods                              #############
