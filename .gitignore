@@ -1,5 +1,5 @@
 __pycache__
 b-tool-venv
-backup-db
+*backup*
 secret_*
 test.py

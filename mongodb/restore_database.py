@@ -1,4 +1,3 @@
-from datetime import datetime
 import subprocess
 
 class bcolors:
@@ -17,17 +16,20 @@ class bcolors:
 ############################################################################################
 
 # WARNING! Remember to execute this script on the server which the running mongodb you want
-# to backup
+# to override
 #
-# WARNING! backups directory must exist
+# WARNING! You need to modify the path variable
 
 db_name = 'friends_birthdays'
 container_name = 'mongodb'
-folder = f"./backups/{db_name}-{datetime.today().strftime('%m-%d-%Y')}"
+
+## NEED TO BE MODIFIED
+folder = f"./backups/{db_name}-06-06-2024"
 
 # Commands
-command_docker_dump = f"docker exec -it {container_name} mongodump --db {db_name} --out ."
-command_docker_cp = f"docker cp {container_name}:/{db_name} {folder}"
+command_docker_cp = f"docker cp {folder} {container_name}:/{db_name} "
+# mongorestore --db <database_name> <path/to/dump/file>
+command_docker_restore = f"docker exec -it {container_name} mongorestore --db {db_name} {db_name}"
 command_docker_rm = f"docker exec -it {container_name} rm -rf {db_name}"
 
 ############################################################################################
@@ -55,11 +57,11 @@ def exec_command(command:str, verbose:bool=False):
 #
 # WARNING! backups directory must exist
 
-# Execute the docker dump
-exec_command(command_docker_dump, True)
+# Copy the folder to the docker container
+exec_command(command_docker_cp, True)
 
-# Copy the file from the container to local
-exec_command(command_docker_cp)
+# Execute inside the container the mongorestore
+exec_command(command_docker_restore, True)
 
 # Remove the file inside the docker container
 exec_command(command_docker_rm)
