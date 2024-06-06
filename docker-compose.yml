@@ -14,7 +14,7 @@ services:
       - secret_mail_password
 
   mongodb:
-    image: mongo:latest
+    image: mongo:bionic
     container_name: mongodb
     ports:
       - "27017:27017"
