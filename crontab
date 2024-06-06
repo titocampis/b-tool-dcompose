@@ -1,5 +1,6 @@
 SECRET_MAIL_USERNAME_FILE="/run/secrets/secret_mail_username"
 SECRET_MAIL_PASSWORD_FILE="/run/secrets/secret_mail_password"
 
-* * * * * /usr/bin/python3 /app/test.py >> /var/log/cron.log 2>&1
+0 0 * * * /usr/bin/python3 /app/check_daily_birthdays.py >> /var/log/cron.log 2>&1
+0 0 1 * * /usr/bin/python3 /app/check_monthly_birthdays.py >> /var/log/cron.log 2>&1
 # An empty line is required at the end of this file for a valid cron file.
