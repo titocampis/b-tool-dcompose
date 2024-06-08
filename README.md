@@ -37,7 +37,7 @@ To execute actions on the database, the following python script [main_db.py](mai
 > :paperclip: It is recommended to use a python virtual environment
 > - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
 > - Activate it: ```source b-tool-venv/bin/activate```
-> - Install the requirements on it: ```pip install -r requirements_mongodb.txt```
+> - Install the requirements on it: ```pip install -r requirements.txt```
 > - To deactivate it: ```deactivate``` 
 
 Ideas of how to use it checking [mongodb/examples.py](mongodb/examples.py)
@@ -84,7 +84,7 @@ source venv-name/bin/activate
 > python3 -m venv <venv-name>
 > ```
 > ```bash
-> pip3 install -r requirements_mongodb.txt
+> pip3 install -r requirements.txt
 > ```
 
 :six: Execute the [mongodb/backup_database.py](mongodb/backup_database.py) script
@@ -159,7 +159,7 @@ python3 check_daily_birthdays.py
 > :paperclip: It is recommended to use a python virtual environment
 > - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
 > - Activate it: ```source b-tool-venv/bin/activate```
-> - Install the requirements on it: ```pip install -r requirements_mongodb.txt```
+> - Install the requirements on it: ```pip install -r requirements.txt```
 > - To deactivate it: ```deactivate``` 
 
 ## Next Steps

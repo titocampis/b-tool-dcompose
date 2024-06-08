@@ -10,6 +10,10 @@ RUN set -x && \
 # Set the working directory inside the container
 WORKDIR /app
 
+# Copy python requirements file and install them
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
 # Copy crontab file
 COPY crontab .
 
@@ -24,9 +28,6 @@ RUN chmod 0755 crontab && \
 COPY utils/ utils/
 COPY check_daily_birthdays.py check_daily_birthdays.py
 COPY check_monthly_birthdays.py check_monthly_birthdays.py
-
-# # Install python modules
-# RUN pip install -r requirements.txt
 
 # Initiate the cron daemon and print in the output the content of /var/log/cron.log
 CMD cron && tail -f /var/log/cron.log
