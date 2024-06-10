@@ -12,10 +12,13 @@ services:
     secrets:
       - secret_mail_username
       - secret_mail_password
+    networks:
+      - btool_network
 
   mongodb:
     image: mongo:bionic
     container_name: mongodb
+    restart: always
     ports:
       - "27017:27017"
     volumes:

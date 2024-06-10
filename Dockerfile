@@ -26,6 +26,7 @@ RUN chmod 0755 crontab && \
 
 # Copy the needed files
 COPY utils/ utils/
+COPY mongodb/filters.py mongodb/filters.py
 COPY check_daily_birthdays.py check_daily_birthdays.py
 COPY check_monthly_birthdays.py check_monthly_birthdays.py
 

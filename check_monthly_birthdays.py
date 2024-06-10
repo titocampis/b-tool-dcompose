@@ -1,11 +1,16 @@
 from datetime import datetime
+import os
 from pymongo import MongoClient
 
 from mongodb import filters as f
 from utils import utilities as ut, send_mail as sm
 
-# MongoDB database info
-client = MongoClient("mongodb://localhost:27017/")
+# Get MongoDB connection details from environment variables
+mongo_host = os.getenv('MONGO_HOST', 'localhost')
+mongo_port = int(os.getenv('MONGO_PORT', 27017))
+
+# Defining database
+client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
 

@@ -4,7 +4,6 @@ docker-compose.yml
 .env
 *venv*
 *backup*
-mongodb
 .gitignore
 unused/
 secret_*
