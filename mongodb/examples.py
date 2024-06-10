@@ -15,16 +15,16 @@ db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
 # INSERTS AND UPDATES
-q.insert_friend(collection, 'mar estanyol zabala', birthday=datetime(1972, 6, 1, 0, 0), sex=True, alias='Ivan', phone='000000000')
-q.insert_friend_dict(collection, {'name': 'Mar Estanyol Zabala', 'birthday': datetime(1997, 3, 17, 0, 0), 'sex': False, 'alias': 'Marseta', 'phone': '637249346', 'month': 'march', 'day': 17, 'month_number': 3})
-q.update_by_name(collection, 'mar estanyol zabala', 'sex', False)
-q.update_by_name(collection, 'mar estanyol zabala', 'birthday', datetime(2002, 7, 8, 0, 0))
-q.update_by_name(collection, 'mar estanyol zabala', 'phone', '605947108')
-q.update_by_name(collection, 'mar estanyol zabala', 'alias', 'tito')
+q.insert_friend(collection, 'jiminy cricket gepeto', birthday=datetime(1950, 1, 1, 0, 0), sex=True, alias='pinocho', phone='123456789')
+q.insert_friend_dict(collection, {'name': 'jiminy cricket gepeto', 'birthday': datetime(1950, 1, 1, 0, 0), 'sex': False, 'alias': 'pinocho', 'phone': '123456789', 'month': 'january', 'day': 1, 'month_number': 1})
+q.update_by_name(collection, 'jiminy cricket gepeto', 'sex', False)
+q.update_by_name(collection, 'jiminy cricket gepeto', 'birthday', datetime(1950, 1, 1, 0, 0))
+q.update_by_name(collection, 'jiminy cricket gepeto', 'phone', '123456789')
+q.update_by_name(collection, 'jiminy cricket gepeto', 'alias', 'pinocho')
 q.remove_friend_by_name(collection, "Jimena Cricketa")
 
 # GETTERS
-print(f.get_friend_by_alias(collection, 'tete'))
-print(f.get_friend_by_name(collection, 'mar estanyol zabala'))
+print(f.get_friend_by_alias(collection, 'pinocho'))
+print(f.get_friend_by_name(collection, 'jiminy cricket gepeto'))
 print(f.get_friends(collection))
-print(f.get_birthdays_by_month(collection, 'march'))
+print(f.get_birthdays_by_month(collection, 'january'))
