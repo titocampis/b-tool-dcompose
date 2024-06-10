@@ -169,9 +169,5 @@ python3 check_daily_birthdays.py
 | :white_check_mark: | Define the function check_monthly_birthdays.py |
 | :white_check_mark: | Check how to do with the secrets and docker compose |
 | :white_check_mark: | Check if .env is needed on the docker image |
-| :white_check_mark: | Test to run the scripts using docker-compose (without sending the email, just printing the value of the secrets) |
-| :white_check_mark: | Test the cronjobs on your laptop |
-| :white_check_mark: | Clone the repository and test it on the raspberry |
-| :hourglass_flowing_sand: | Change the way you backup the db |
-| :hourglass_flowing_sand: | Clone the webapp to this branch, test it but dont remove pupurri (to let horoscope calc) |
-
+| :white_check_mark: | Change the way you backup the db |
+| :hourglass_flowing_sand: | Think where put webapp but dont remove pupurri (to let horoscope calc) |
