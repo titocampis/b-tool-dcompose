@@ -8,6 +8,60 @@ For this, we will need:
     - 1 job executed each day at 00:00 to check if it is the birthday of some of my friends, and in case it is, send a mail to my mailbox notifying me about it and with the years he or she is turning
     - 1 job executed the 1st day of each month to check and send all the birthdays of the month to my mailbox with the same information
 
+## Index
+1. [Introduction](#introduction)
+2. [Project Structure](#project-structure)
+3. [MongoDB Database Container](#mongodb-database-container)
+   - [Docker Build](#docker-build)
+   - [Docker Compose Config](#docker-compose-config)
+   - [Running the Container](#running-the-container)
+   - [Execute Actions Once the Database is Running](#execute-actions-once-the-database-is-running)
+   - [Make Queries on the Database](#make-queries-on-the-database)
+   - [Retrieve Data from Database](#retrieve-data-from-database)
+   - [How to Backup the Database](#how-to-backup-the-database)
+4. [Cronjobs Container](#cronjobs-container)
+   - [Cronjobs Image Build](#cronjobs-image-build)
+   - [Docker Compose Config](#docker-compose-config-1)
+   - [Secrets](#secrets)
+   - [Cronjobs Container Run](#cronjobs-container-run)
+   - [Local Tests](#local-tests)
+5. [Web Server](#web-server)
+   - [How to Run It](#how-to-run-it)
+6. [Next Steps](#next-steps)
+
+## Project Structure
+```bash
+mongodb/ #
+    ├── __init__.py # File for python to consider this folder as python package
+    ├── backup_database.py # Script to extract a dump from a mongodb
+    ├── examples.py # Queries examples to execute on the mongodb
+    ├── filters.py # Queries to execute from outside the database and request data
+    ├── init_mongo.py # Script to define the rules from a new database (if not restored)
+    ├── internal_queries.py # Queries for the internal mongodb management (create indexes, configure db, etc.)
+    └── restore_database.py # Script to restore a database from a mongodb dump file
+static/ # Web server static content
+    ├── css/ # Styles
+    └── img/ # Pictures 
+templates/ # Web server templates to render from controller
+    └── base.html # The only template to render
+utils/ # Folder containing the shared utilities used in all components
+    ├── send_mail.py # Standard method to send an email
+    └── utilitites.py # Other methods shared between all components
+.dockerignore # File including all the files and folders to no push into docker images
+.gitignore # File including all the files and folders to not push into git
+check_daily_birthdays.py # File to be executed every day at 00:00 to check if it's the birthday of some friend
+                         # and if it is the case, send an email
+check_mongo_bakup.py # File to check that the mongodb backup has been done successfully
+check_monthly_birthdays.py # File to be executed every month 1st sending via email all the birthdays of the month
+crontab # File with the jobs configured
+docker-compose.yml # File with the configuration for all docker containers
+Dockerfile # Cron image composition file
+main_db.py # Python script to execute queries into db
+README.md # Repository documentation
+requirements.txt # File with python modules to install
+webapp.pym # Webapp controller in Flask to server the web
+```
+
 ## MongoDB Database Container
 A mongodb database containing all friends data:
 - full name
@@ -162,12 +216,43 @@ python3 check_daily_birthdays.py
 > - Install the requirements on it: ```pip install -r requirements.txt```
 > - To deactivate it: ```deactivate``` 
 
+## Web Server
+
+In this repository, we also have a lite webserver showing the birthdays of my friends.
+
+- [webapp.py](webapp.py): file with the controller of the webapp 
+- [static/](static/): static content to show on the web page: images, css (styles)
+- [templates/](templates/): templates to render by the controller
+- :paperclip: it also uses functions from [utils/](utils/)
+
+### How to run it
+
+As it is a very lite webserver, we do not develop to run it using docker, it will run directly from python:
+
+:one: Activate the python venv
+```bash
+source venv-name/bin/activate
+```
+
+> :paperclip: **NOTE:** If the python venv is not created:
+> ```bash
+> python3 -m venv <venv-name>
+> ```
+> ```bash
+> pip3 install -r requirements.txt
+> ```
+
+:two: Run the [webapp.py](webapp.py) script
+```bash
+python3 webapp.py
+```
+
+:three: Access in your browser: [http://localhost:8080](http://localhost:8080)
+
+> :paperclip: **NOTE:** The webserver is running on debug mode, so you can make hot changes and with Ctrl+s will be applied at the moment.
+
 ## Next Steps
 | Status | Task |
 |----------|----------|
-| :white_check_mark: | Define the function check_daily_birthdays.py |
-| :white_check_mark: | Define the function check_monthly_birthdays.py |
-| :white_check_mark: | Check how to do with the secrets and docker compose |
-| :white_check_mark: | Check if .env is needed on the docker image |
 | :white_check_mark: | Change the way you backup the db |
-| :hourglass_flowing_sand: | Think where put webapp but dont remove pupurri (to let horoscope calc) |
+| :white_check_mark: | Think where put webapp but dont remove pupurri (to let horoscope calc) |
