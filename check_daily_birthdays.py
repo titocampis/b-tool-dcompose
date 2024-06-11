@@ -5,20 +5,19 @@ from pymongo import MongoClient
 from mongodb import filters as f
 from utils import utilities as ut, send_mail as sm
 
-# MongoDB database info
-client = MongoClient("mongodb://localhost:27017/")
+# Get MongoDB connection details from environment variables
+mongo_host = os.getenv('MONGO_HOST', 'localhost')
+mongo_port = int(os.getenv('MONGO_PORT', 27017))
+
+# Defining database
+client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
 collection = db["friends_collection"]
 
 print(f"[{datetime.today()}]: Starting the daily birthday checking")
 
-# Uncomment for local Executions
-# sender_mail_username = ''
-# sender_mail_password = ''
-
 # Retrieve secrets
-# sender_mail_username = ut.retrieve_secret(os.environ.get('SECRET_MAIL_USERNAME_FILE'))
-# sender_mail_password = ut.retrieve_secret(os.environ.get('SECRET_MAIL_PASSWORD_FILE'))
+sender_mail_username, sender_mail_password = ut.retrieve_secrets()
 
 # Configure email
 sender_name = 'B-Tool Bot'

@@ -1,7 +1,10 @@
 Dockerfile
 README.md
-docker-compose.yaml
+docker-compose.yml
 .env
+*venv*
+*backup*
+.gitignore
 unused/
 secret_*
-test.py
+# test.py

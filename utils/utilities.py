@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import unicodedata as uni
 
 class bcolors:
@@ -72,14 +73,24 @@ def calculate_old(birthday:datetime):
         print(f"{bcolors.FAIL}Invalid birthday value [{birthday}]. Birthday field must be a datetime object.{bcolors.ENDC}")
         exit(1)
 
-def retrieve_secret(secret_path:str):
-    '''Method to retrieve the value of a secret'''
+def read_secret(secret_path:str):
+    '''Method which reads the contents of a file and returns its contents as a string, with leading and trailing whitespace removed'''
+    with open(secret_path, 'r') as secret_file:
+        return secret_file.read().strip()
+    
+def retrieve_secrets():
+    '''Method specific for this app to retrieve the needed secrets from the configured files'''
     try:
-        with open(secret_path, 'r') as secret_file: return secret_file.read().strip()
+        sender_mail_username = read_secret(os.environ.get('SECRET_MAIL_USERNAME_FILE'))
+        sender_mail_password = read_secret(os.environ.get('SECRET_MAIL_PASSWORD_FILE'))
+        return sender_mail_username, sender_mail_password
+
     except FileNotFoundError as e:
         print(f"Error: Secret file not found: {e.filename}")
+
     except Exception as e:
-        print(f"Error: An error ocurred parsing the secrets files\nError: {e}")
+        print(f"Error: An error ocurred parsing the secrets files: {e}")
+
 
 def return_birthdays_today(birthday:datetime, friends:dict):
     '''Method which returns all today friends birthdays of some friend checking the db and returning a dict with this data and its birthday'''
