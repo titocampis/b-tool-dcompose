@@ -12,7 +12,7 @@ RUN set -x && \
 ENV DEBIAN_FRONTEND=noninteractive 
 
 ## Installations and configurations to set Madrid TimeZone
-## also 
+## also reduce the image size cleaning up APT
 RUN apt-get install -y tzdata && \
     ln -snf /usr/share/zoneinfo/Europe/Madrid /etc/localtime && \
     echo "Europe/Madrid" > /etc/timezone &&\
