@@ -20,6 +20,9 @@ For this, we will need:
    - [Retrieve Data from Database](#retrieve-data-from-database)
    - [How to Backup the Database](#how-to-backup-the-database)
 4. [Cronjobs Container](#cronjobs-container)
+   - [Send Email](#send-email)
+       - [SMTP](#smtp)
+       - [Enable Google Apps Authentication](#enable-google-apps-authentication)
    - [Cronjobs Image Build](#cronjobs-image-build)
    - [Docker Compose Config](#docker-compose-config-1)
    - [Secrets](#secrets)
@@ -167,6 +170,26 @@ python3 check_mongo_bakup.py
 Docker container with 2 cronjobs scheduled
 - 1 job executed each day at 00:00 to check if it is the birthday of some of my friends, and in case it is, send a mail to my mailbox notifying me about it and with the years he or she is turning
 - 1 job executed the 1st day of each month to check and send all the birthdays of the month to my mailbox with the same information
+
+### Send Email
+#### SMTP
+To send the email we use [smtplib](https://docs.python.org/3/library/smtplib.html) python library which provides a way to send email using the Simple Mail Transfer Protocol (SMTP). It provides methods for logging in to an SMTP server using a username and password which we are going to use and allows sending emails by specifying sender and recipient addresses, subject, and body. It supports plain text and MIME (Multipurpose Internet Mail Extensions) emails.
+
+So we use [smtplib](https://docs.python.org/3/library/smtplib.html) to authenticate in our Google account and send email through this account.
+#### Enable Google Apps Authentication
+:one: Go into `Google Account Management`:
+
+![alt text](static/img/jiminy.png)
+
+:two: Go to `Security`
+
+:three: Turn ON `2-Step Verification` (if it is not already enabled)
+
+:four: On the same page as `2-Step Verification`, go to `App passwords`:
+
+![alt text](static/img/app_pwd.png)
+
+:five: Create a new `app password` to authenticate into Google Account using apps.
 
 ### Cronjobs Image Build
 We can check the configuration of the image in [Dockerfile](Dockerfile)
