@@ -1,11 +1,25 @@
 FROM ubuntu:22.04
 
-# Enable verbose for shell,
+# Enable shell verbosity, 
 #   update the system, install cron binary and python
 RUN set -x && \
     apt-get update && \
-    apt-get install -y cron python3 python3-pip && \
-    apt-get clean
+    apt-get install -y cron python3 python3-pip
+
+# TZone Configuration
+## Set environment variable for non-interactive 
+##     installation (the tzdata ask you for region)
+ENV DEBIAN_FRONTEND=noninteractive 
+
+## Installations and configurations to set Madrid TimeZone
+## also 
+RUN apt-get install -y tzdata && \
+    ln -snf /usr/share/zoneinfo/Europe/Madrid /etc/localtime && \
+    echo "Europe/Madrid" > /etc/timezone &&\
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV TZ=Europe/Madrid
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -30,5 +44,6 @@ COPY mongodb/filters.py mongodb/filters.py
 COPY check_daily_birthdays.py check_daily_birthdays.py
 COPY check_monthly_birthdays.py check_monthly_birthdays.py
 
-# Initiate the cron daemon and print in the output the content of /var/log/cron.log
+# Initiate the cron daemon and print in the output
+#    the content of /var/log/cron.log
 CMD cron && tail -f /var/log/cron.log
