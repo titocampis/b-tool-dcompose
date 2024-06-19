@@ -1,12 +1,15 @@
-# Birthday Tool with Docker Compose
+# Birthday Tool with Docker Compose 🎉
 
-The idea of this mini project is to be the best friend of the world!! One of the bigest problems of a good friend is always remember the birthdays of your friends... But being honest, it is not always possible. That's why I developed this tool, to run into a raspberry pi (or wherever because it is implemented in docker). It will always remember you the birthday of your friends in order you can be the friend you always wanted to be! :tada:
+Imagine a world where you never miss a friend's birthday again. This project aims to be the ultimate companion, ensuring you remember every special day. One of the greatest challenges of being a good friend is keeping track of birthdays; but let’s face it, life gets busy. That's when this tool comes into play, designed to run on a Raspberry Pi (or any environment, thanks to Docker). It will faithfully remind you of your friends’ birthdays, helping you become the thoughtful friend you’ve always aspired to be! 🎉
 
-For this, we will need:
-1. A docker container running a mongodb database with all the birthdays of my friends
-2. Another docker container with 2 cronjobs:
-    - 1 job executed each day at 00:00 to check if it is the birthday of some of my friends, and in case it is, send a mail to my mailbox notifying me about it and with the years he or she is turning
-    - 1 job executed the 1st day of each month to check and send all the birthdays of the month to my mailbox with the same information
+To bring this idea to life, we will set up:
+
+- A Docker container hosting a MongoDB database to store all your friends' birthdays.
+- Another Docker container with two crucial cron jobs:
+    - A daily job at midnight that checks if it's anyone's birthday and sends an email notification with their age.
+    - A monthly job on the 1st, summarizing all the upcoming birthdays and sending a comprehensive email with the same details.
+
+Get ready to impress your friends with your impeccable memory and thoughtfulness!
 
 ## Index
 1. [Introduction](#introduction)
