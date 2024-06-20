@@ -42,7 +42,7 @@ COPY utils/ utils/
 COPY mongodb/filters.py mongodb/filters.py
 COPY check_daily_birthdays.py check_daily_birthdays.py
 COPY check_monthly_birthdays.py check_monthly_birthdays.py
-COPY check_mongo_bakup.py check_mongo_bakup.py
+COPY check_mongo_backup.py check_mongo_backup.py
 
 # Initiate the cron daemon and print in the output the content of /var/log/cron.log
 CMD cron && tail -f /var/log/cron.log

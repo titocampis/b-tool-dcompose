@@ -56,7 +56,7 @@ utils/ # Folder containing the shared utilities used in all components
 .gitignore # File including all the files and folders to not push into git
 check_daily_birthdays.py # File to be executed every day at 00:00 to check if it's the birthday of some friend
                          # and if it is the case, send an email
-check_mongo_bakup.py # File to check that the mongodb backup has been done successfully
+check_mongo_backup.py # File to check that the mongodb backup has been done successfully
 check_monthly_birthdays.py # File to be executed every month 1st sending via email all the birthdays of the month
 crontab # File with the jobs configured
 docker-compose.yaml # File with the configuration for all docker containers
@@ -165,7 +165,7 @@ python3 mongodb/restore_database.py
 
 Now, check the mongodb has been correctly backed up running:
 ```bash
-python3 check_mongo_bakup.py
+python3 check_mongo_backup.py
 ```
 
 ## Cronjobs Container
@@ -282,18 +282,42 @@ vim secret_mail_password.conf
 docker compose up -d
 ```
 
-:six: Execute the python script you wanna test from the new `cron-container` just created:
+:six: Execute `check_mongo_backup.py` in the new `cron-container` just created:
 - Just db connection:
 ```bash
-docker exec cron-container python3 check_mongo_bakup.py
+docker exec cron-container export MONGO_HOST=mongodb; python3 check_mongo_backup.py
 ```
 
-- Db connection + email:
+:seven: (Just if you wanna test the email send): 
+- Replace in your local machine:
+```python
+# Retrieve secrets
+# sender_mail_username, sender_mail_password = ut.retrieve_secrets()
+sender_mail_username=''
+sender_mail_password=''
+```
+
+- Copy the modified file into docker container:
 ```bash
-docker exec cron-container python3 check_monthly_birthdays.py
+docker cp check_monthly_birthdays.py cron-container:check_monthly_birthdays.py
 ```
 
-:seven: Remove the sensitive data files:
+- Execute inside the container:
+```bash
+docker exec cron-container export MONGO_HOST=mongodb; python3 check_monthly_birthdays.py
+```
+
+- Restore the modifications on the file:
+```bash
+git restore check_monthly_birthdays.py
+```
+
+- Copy the right content again inside the container:
+```bash
+cp check_monthly_birthdays.py cron-container:check_monthly_birthdays.py
+```
+
+:eight: Remove the sensitive data files:
 ```bash
 rm -rf secret*
 ```
