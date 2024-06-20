@@ -123,7 +123,7 @@ git clone https://github.com/titocampis/b-tool-dcompose.git
 
 :two: Access the repository
 
-:three: Ensure that the mongodb container is running
+:three: Ensure that the mongodb container is running:
 ```bash
 docker ps
 ```
@@ -133,7 +133,7 @@ docker ps
 mkdir backups
 ```
 
-:five: Activate the python venv
+:five: Activate the python venv:
 ```bash
 source venv-name/bin/activate
 ```
@@ -146,19 +146,18 @@ source venv-name/bin/activate
 > pip3 install -r requirements.txt
 > ```
 
-:six: Execute the [mongodb/backup_database.py](mongodb/backup_database.py) script
+:six: Execute the [mongodb/backup_database.py](mongodb/backup_database.py) script:
 ```bash
 python3 mongodb/backup_database.py
 ```
 
 :seven: The backup file will be created, so it must be send to the target host. It can be done by multiple ways, but i recommend sftp using both flavours (get / put) with the full backup directory path. 
 
-:eight: Access the host where the override is going to be made
+:eight: Access the host where the override is going to be made.
 
+:nine: Repeat until step 6 on the target mongodb host.
 
-:nine: Repeat until step 6 on the target mongodb host
-
-:ten: Execute the [mongodb/restore_database.py](mongodb/restore_database.py) script
+:ten: Execute the [mongodb/restore_database.py](mongodb/restore_database.py) script:
 ```bash
 python3 mongodb/restore_database.py
 ```
@@ -169,7 +168,7 @@ python3 check_mongo_backup.py
 ```
 
 ## Cronjobs Container
-Docker container with 2 cronjobs scheduled
+Docker container with 2 cronjobs scheduled:
 - 1 job executed each day at 00:00 to check if it is the birthday of some of my friends, and in case it is, send a mail to my mailbox notifying me about it and with the years he or she is turning
 - 1 job executed the 1st day of each month to check and send all the birthdays of the month to my mailbox with the same information
 
@@ -184,9 +183,9 @@ So we use [smtplib](https://docs.python.org/3/library/smtplib.html) to authentic
 
 ![alt text](static/img/jiminy.png)
 
-:two: Go to `Security`
+:two: Go to `Security`.
 
-:three: Turn ON `2-Step Verification` (if it is not already enabled)
+:three: Turn ON `2-Step Verification` (if it is not already enabled).
 
 :four: On the same page as `2-Step Verification`, go to `App passwords`:
 
@@ -195,7 +194,7 @@ So we use [smtplib](https://docs.python.org/3/library/smtplib.html) to authentic
 :five: Create a new `app password` to authenticate into Google Account using apps.
 
 ### Cronjobs Image Build
-We can check the configuration of the image in [Dockerfile](Dockerfile)
+We can check the configuration of the image in [Dockerfile](Dockerfile).
 
 ```bash
 docker build -t cron-container .
@@ -208,7 +207,6 @@ It can be checked on [docker-compose.yaml](docker-compose.yaml)
 
 
 ### Secrets
-
 In order to export the `mail_username` and the `mail_password` from the `mail service` we use **docker secrets**. So before running the application, the content of the following files must be fulfilled:
 
 - `secret_mail_username.conf`
@@ -231,13 +229,13 @@ vim secret_mail_password.conf
 
 > :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history.
 
-:two: Run the following on terminal
+:two: Run the following on terminal:
 ```bash
 export SECRET_MAIL_USERNAME_FILE="./secret_mail_username.conf" && \
 export SECRET_MAIL_PASSWORD_FILE="./secret_mail_password.conf"
 ```
 
-:three: Run the application
+:three: Run the script:
 ```bash
 python3 check_daily_birthdays.py
 ```
@@ -247,7 +245,7 @@ python3 check_daily_birthdays.py
 rm -rf secret*
 ```
 
-> :paperclip: It is recommended to use a python virtual environment
+> :paperclip: It is recommended to use a python virtual environment:
 > - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
 > - Activate it: ```source b-tool-venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
@@ -262,7 +260,7 @@ rm -rf secret*
 git pull -v --all
 ```
 
-:three: Build the new released version of the docker image
+:three: Build the new released version of the docker image:
 ```bash
 docker build -t cron-container .
 ```
@@ -312,7 +310,7 @@ rm -rf secret*
 
 ## Web Server
 
-In this repository, we also have a lite webserver showing the birthdays of my friends.
+In this repository, we also have a lite webserver showing the birthdays of my friends:
 
 - [webapp.py](webapp.py): file with the controller of the webapp 
 - [static/](static/): static content to show on the web page: images, css (styles)
@@ -323,7 +321,7 @@ In this repository, we also have a lite webserver showing the birthdays of my fr
 
 As it is a very lite webserver, we do not develop to run it using docker, it will run directly from python:
 
-:one: Activate the python venv
+:one: Activate the python venv:
 ```bash
 source venv-name/bin/activate
 ```
@@ -336,7 +334,7 @@ source venv-name/bin/activate
 > pip3 install -r requirements.txt
 > ```
 
-:two: Run the [webapp.py](webapp.py) script
+:two: Run the [webapp.py](webapp.py) script:
 ```bash
 python3 webapp.py
 ```
