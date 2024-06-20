@@ -277,7 +277,7 @@ vim secret_mail_password.conf
 
 > :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history.
 
-:five: 
+:five: Run the docker container using `docker compose`:
 ```bash
 docker compose up -d
 ```
@@ -289,32 +289,20 @@ docker exec cron-container export MONGO_HOST=mongodb; python3 check_mongo_backup
 ```
 
 :seven: (Just if you wanna test the email send): 
-- Replace in your local machine:
-```python
-# Retrieve secrets
-# sender_mail_username, sender_mail_password = ut.retrieve_secrets()
-sender_mail_username=''
-sender_mail_password=''
+
+- Access the `cron-container`:
+```bash
+docker exec -it cron-container /bin/bash
 ```
 
-- Copy the modified file into docker container:
+- Inside the docker container, export the following variables:
 ```bash
-docker cp check_monthly_birthdays.py cron-container:check_monthly_birthdays.py
+export MONGO_HOST=mongodb; export SECRET_MAIL_USERNAME_FILE="/run/secrets/secret_mail_username"; export SECRET_MAIL_PASSWORD_FILE="/run/secrets/secret_mail_password"
 ```
 
-- Execute inside the container:
+- Execute inside the container `check_monthly_birthdays.py`:
 ```bash
-docker exec cron-container export MONGO_HOST=mongodb; python3 check_monthly_birthdays.py
-```
-
-- Restore the modifications on the file:
-```bash
-git restore check_monthly_birthdays.py
-```
-
-- Copy the right content again inside the container:
-```bash
-cp check_monthly_birthdays.py cron-container:check_monthly_birthdays.py
+python3 check_monthly_birthdays.py
 ```
 
 :eight: Remove the sensitive data files:
