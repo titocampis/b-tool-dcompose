@@ -227,7 +227,10 @@ vim secret_mail_username.conf
 vim secret_mail_password.conf
 ```
 
-> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history.
+> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> - `cat > secret_mail_username.conf`
+> - type the content + `Enter`
+> - `Ctrl+D`
 
 :two: Run the following on terminal:
 ```bash
@@ -273,7 +276,10 @@ vim secret_mail_username.conf
 vim secret_mail_password.conf
 ```
 
-> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history.
+> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> - `cat > secret_mail_username.conf`
+> - type the content + `Enter`
+> - `Ctrl+D`
 
 :five: Run the docker container using `docker compose`:
 ```bash
