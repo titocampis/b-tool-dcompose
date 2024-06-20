@@ -19,8 +19,6 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Docker Compose Config](#docker-compose-config)
    - [Running the Container](#running-the-container)
    - [Execute Actions Once the Database is Running](#execute-actions-once-the-database-is-running)
-   - [Make Queries on the Database](#make-queries-on-the-database)
-   - [Retrieve Data from Database](#retrieve-data-from-database)
    - [How to Backup the Database](#how-to-backup-the-database)
 4. [Cronjobs Container](#cronjobs-container)
    - [Send Email](#send-email)
@@ -31,6 +29,7 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Secrets](#secrets)
    - [Cronjobs Container Run](#cronjobs-container-run)
    - [Local Tests](#local-tests)
+   - [Release new cron-container version on Production](#release-new-cron-container-version-on-production)
 5. [Web Server](#web-server)
    - [How to Run It](#how-to-run-it)
 6. [Next Steps](#next-steps)
@@ -57,10 +56,10 @@ utils/ # Folder containing the shared utilities used in all components
 .gitignore # File including all the files and folders to not push into git
 check_daily_birthdays.py # File to be executed every day at 00:00 to check if it's the birthday of some friend
                          # and if it is the case, send an email
-check_mongo_bakup.py # File to check that the mongodb backup has been done successfully
+check_mongo_backup.py # File to check that the mongodb backup has been done successfully
 check_monthly_birthdays.py # File to be executed every month 1st sending via email all the birthdays of the month
 crontab # File with the jobs configured
-docker-compose.yml # File with the configuration for all docker containers
+docker-compose.yaml # File with the configuration for all docker containers
 Dockerfile # Cron image composition file
 main_db.py # Python script to execute queries into db
 README.md # Repository documentation
@@ -84,7 +83,7 @@ docker pull mongo:latest
 ```
 
 ### Docker Compose Config
-It can be checked on [docker-compose.yml](docker-compose.yml)
+It can be checked on [docker-compose.yaml](docker-compose.yaml)
 
 ### Running the container
 ```bash
@@ -106,7 +105,7 @@ Ideas of how to use it checking [mongodb/examples.py](mongodb/examples.py)
 Friends can be inserted by different ways, updated, removed... Check all the methods available in [mongodb/internal_queries.py](mongodb/internal_queries.py)
 
 #### Retrieve data from database
-All friends can be retrieved, as well as friends by its name, by its alias, retrieve friends with birthday in specific month, etc. Check all the methods available in [mongodb/filters.py](mongodb/filters.py)month... 
+All friends can be retrieved, as well as friends by its name, by its alias, retrieve friends with birthday in specific month, etc. Check all the methods available in [mongodb/filters.py](mongodb/filters.py)
 
 ### How to backup the database?
 With this process we are going to replicate exactly the mongodb, with all the documents and also the indexes.
@@ -124,7 +123,7 @@ git clone https://github.com/titocampis/b-tool-dcompose.git
 
 :two: Access the repository
 
-:three: Ensure that the mongodb container is running
+:three: Ensure that the mongodb container is running:
 ```bash
 docker ps
 ```
@@ -134,7 +133,7 @@ docker ps
 mkdir backups
 ```
 
-:five: Activate the python venv
+:five: Activate the python venv:
 ```bash
 source venv-name/bin/activate
 ```
@@ -147,30 +146,29 @@ source venv-name/bin/activate
 > pip3 install -r requirements.txt
 > ```
 
-:six: Execute the [mongodb/backup_database.py](mongodb/backup_database.py) script
+:six: Execute the [mongodb/backup_database.py](mongodb/backup_database.py) script:
 ```bash
 python3 mongodb/backup_database.py
 ```
 
 :seven: The backup file will be created, so it must be send to the target host. It can be done by multiple ways, but i recommend sftp using both flavours (get / put) with the full backup directory path. 
 
-:eight: Access the host where the override is going to be made
+:eight: Access the host where the override is going to be made.
 
+:nine: Repeat until step 6 on the target mongodb host.
 
-:nine: Repeat until step 6 on the target mongodb host
-
-:ten: Execute the [mongodb/restore_database.py](mongodb/restore_database.py) script
+:ten: Execute the [mongodb/restore_database.py](mongodb/restore_database.py) script:
 ```bash
 python3 mongodb/restore_database.py
 ```
 
 Now, check the mongodb has been correctly backed up running:
 ```bash
-python3 check_mongo_bakup.py
+python3 check_mongo_backup.py
 ```
 
 ## Cronjobs Container
-Docker container with 2 cronjobs scheduled
+Docker container with 2 cronjobs scheduled:
 - 1 job executed each day at 00:00 to check if it is the birthday of some of my friends, and in case it is, send a mail to my mailbox notifying me about it and with the years he or she is turning
 - 1 job executed the 1st day of each month to check and send all the birthdays of the month to my mailbox with the same information
 
@@ -179,14 +177,15 @@ Docker container with 2 cronjobs scheduled
 To send the email we use [smtplib](https://docs.python.org/3/library/smtplib.html) python library which provides a way to send email using the Simple Mail Transfer Protocol (SMTP). It provides methods for logging in to an SMTP server using a username and password which we are going to use and allows sending emails by specifying sender and recipient addresses, subject, and body. It supports plain text and MIME (Multipurpose Internet Mail Extensions) emails.
 
 So we use [smtplib](https://docs.python.org/3/library/smtplib.html) to authenticate in our Google account and send email through this account.
+
 #### Enable Google Apps Authentication
 :one: Go into `Google Account Management`:
 
 ![alt text](static/img/jiminy.png)
 
-:two: Go to `Security`
+:two: Go to `Security`.
 
-:three: Turn ON `2-Step Verification` (if it is not already enabled)
+:three: Turn ON `2-Step Verification` (if it is not already enabled).
 
 :four: On the same page as `2-Step Verification`, go to `App passwords`:
 
@@ -195,7 +194,7 @@ So we use [smtplib](https://docs.python.org/3/library/smtplib.html) to authentic
 :five: Create a new `app password` to authenticate into Google Account using apps.
 
 ### Cronjobs Image Build
-We can check the configuration of the image in [Dockerfile](Dockerfile)
+We can check the configuration of the image in [Dockerfile](Dockerfile).
 
 ```bash
 docker build -t cron-container .
@@ -204,11 +203,10 @@ docker build -t cron-container .
 > :paperclip: **NOTE:** [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
 
 ### Docker Compose Config
-It can be checked on [docker-compose.yml](docker-compose.yml)
+It can be checked on [docker-compose.yaml](docker-compose.yaml)
 
 
 ### Secrets
-
 In order to export the `mail_username` and the `mail_password` from the `mail service` we use **docker secrets**. So before running the application, the content of the following files must be fulfilled:
 
 - `secret_mail_username.conf`
@@ -221,30 +219,104 @@ docker compose up -d cron
 ```
 
 ### Local Tests
-:one: Fulfill the following files with the sensitive data:
-- `secret_mail_username.conf`
-- `secret_mail_password.conf`
+:one: Fulfill the following files with the sensitive data (just if you wanna test send_email):
+```bash
+vim secret_mail_username.conf
+```
+```bash
+vim secret_mail_password.conf
+```
 
-:two: Run the following on terminal
+> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> - `cat > secret_mail_username.conf`
+> - type the content + `Enter`
+> - `Ctrl+D`
+
+:two: Run the following on terminal:
 ```bash
 export SECRET_MAIL_USERNAME_FILE="./secret_mail_username.conf" && \
 export SECRET_MAIL_PASSWORD_FILE="./secret_mail_password.conf"
 ```
 
-:three: Run the application
+:three: Run the script:
 ```bash
 python3 check_daily_birthdays.py
 ```
 
-> :paperclip: It is recommended to use a python virtual environment
+:four: Remove the sensitive data files:
+```bash
+rm -rf secret*
+```
+
+> :paperclip: It is recommended to use a python virtual environment:
 > - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
 > - Activate it: ```source b-tool-venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
 > - To deactivate it: ```deactivate``` 
 
+### Release new `cron-container` version on Production
+
+:one: Access production server
+
+:two: Pull the last version of the `main` branch / clone this repository:
+```bash
+git pull -v --all
+```
+
+:three: Build the new released version of the docker image:
+```bash
+docker build -t cron-container .
+```
+
+:four: Fulfill the following files with the sensitive data (just if you wanna test send_email):
+```bash
+vim secret_mail_username.conf
+```
+```bash
+vim secret_mail_password.conf
+```
+
+> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> - `cat > secret_mail_username.conf`
+> - type the content + `Enter`
+> - `Ctrl+D`
+
+:five: Run the docker container using `docker compose`:
+```bash
+docker compose up -d
+```
+
+:six: Execute `check_mongo_backup.py` in the new `cron-container` just created:
+- Just db connection:
+```bash
+docker exec cron-container export MONGO_HOST=mongodb; python3 check_mongo_backup.py
+```
+
+:seven: (Just if you wanna test the email send): 
+
+- Access the `cron-container`:
+```bash
+docker exec -it cron-container /bin/bash
+```
+
+- Inside the docker container, export the following variables:
+```bash
+export MONGO_HOST=mongodb; export SECRET_MAIL_USERNAME_FILE="/run/secrets/secret_mail_username"; export SECRET_MAIL_PASSWORD_FILE="/run/secrets/secret_mail_password"
+```
+
+- Execute inside the container `check_monthly_birthdays.py`:
+```bash
+python3 check_monthly_birthdays.py
+```
+
+:eight: Remove the sensitive data files:
+```bash
+rm -rf secret*
+```
+
 ## Web Server
 
-In this repository, we also have a lite webserver showing the birthdays of my friends.
+In this repository, we also have a lite webserver showing the birthdays of my friends:
 
 - [webapp.py](webapp.py): file with the controller of the webapp 
 - [static/](static/): static content to show on the web page: images, css (styles)
@@ -255,7 +327,7 @@ In this repository, we also have a lite webserver showing the birthdays of my fr
 
 As it is a very lite webserver, we do not develop to run it using docker, it will run directly from python:
 
-:one: Activate the python venv
+:one: Activate the python venv:
 ```bash
 source venv-name/bin/activate
 ```
@@ -268,7 +340,7 @@ source venv-name/bin/activate
 > pip3 install -r requirements.txt
 > ```
 
-:two: Run the [webapp.py](webapp.py) script
+:two: Run the [webapp.py](webapp.py) script:
 ```bash
 python3 webapp.py
 ```

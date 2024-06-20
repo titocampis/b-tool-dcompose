@@ -8,7 +8,7 @@ from mongodb import filters as f
 ################################################################################# 
 
 # Get MongoDB connection details from environment variables
-mongo_host = os.getenv('MONGO_HOST', 'localhost')
+mongo_host = os.getenv('MONGO_HOST', 'localhost') # You can: export MONGO_HOST=mongodb
 mongo_port = int(os.getenv('MONGO_PORT', 27017))
 
 # Defining database

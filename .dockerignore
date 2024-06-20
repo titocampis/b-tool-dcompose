@@ -1,10 +1,26 @@
-Dockerfile
-README.md
-docker-compose.yml
-.env
-*venv*
-*backup*
+#
+# Alex default .dockerignore, any manual change will be overwritten.
+#
+
+# General untracked
+__pycache__/
 .gitignore
+backup/
+*Dockerfile*
+docker-compose*
+README*
+old/
 unused/
-secret_*
-# test.py
+*venv*
+
+# Environment variable files
+.env
+.env.*
+
+# Log files
+logs/
+*.log
+
+# Sensitive data
+*secret*
+*vault*
