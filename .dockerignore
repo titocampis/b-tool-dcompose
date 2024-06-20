@@ -1,6 +1,6 @@
 Dockerfile
 README.md
-docker-compose.yml
+docker-compose.yaml
 .env
 *venv*
 *backup*

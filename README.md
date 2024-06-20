@@ -59,7 +59,7 @@ check_daily_birthdays.py # File to be executed every day at 00:00 to check if it
 check_mongo_bakup.py # File to check that the mongodb backup has been done successfully
 check_monthly_birthdays.py # File to be executed every month 1st sending via email all the birthdays of the month
 crontab # File with the jobs configured
-docker-compose.yml # File with the configuration for all docker containers
+docker-compose.yaml # File with the configuration for all docker containers
 Dockerfile # Cron image composition file
 main_db.py # Python script to execute queries into db
 README.md # Repository documentation
@@ -83,7 +83,7 @@ docker pull mongo:latest
 ```
 
 ### Docker Compose Config
-It can be checked on [docker-compose.yml](docker-compose.yml)
+It can be checked on [docker-compose.yaml](docker-compose.yaml)
 
 ### Running the container
 ```bash
@@ -204,7 +204,7 @@ docker build -t cron-container .
 > :paperclip: **NOTE:** [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
 
 ### Docker Compose Config
-It can be checked on [docker-compose.yml](docker-compose.yml)
+It can be checked on [docker-compose.yaml](docker-compose.yaml)
 
 
 ### Secrets
