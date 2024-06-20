@@ -19,8 +19,6 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Docker Compose Config](#docker-compose-config)
    - [Running the Container](#running-the-container)
    - [Execute Actions Once the Database is Running](#execute-actions-once-the-database-is-running)
-   - [Make Queries on the Database](#make-queries-on-the-database)
-   - [Retrieve Data from Database](#retrieve-data-from-database)
    - [How to Backup the Database](#how-to-backup-the-database)
 4. [Cronjobs Container](#cronjobs-container)
    - [Send Email](#send-email)
@@ -31,6 +29,7 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Secrets](#secrets)
    - [Cronjobs Container Run](#cronjobs-container-run)
    - [Local Tests](#local-tests)
+   - [Release new cron-container version on Production](#release-new-cron-container-version-on-production)
 5. [Web Server](#web-server)
    - [How to Run It](#how-to-run-it)
 6. [Next Steps](#next-steps)
@@ -106,7 +105,7 @@ Ideas of how to use it checking [mongodb/examples.py](mongodb/examples.py)
 Friends can be inserted by different ways, updated, removed... Check all the methods available in [mongodb/internal_queries.py](mongodb/internal_queries.py)
 
 #### Retrieve data from database
-All friends can be retrieved, as well as friends by its name, by its alias, retrieve friends with birthday in specific month, etc. Check all the methods available in [mongodb/filters.py](mongodb/filters.py)month... 
+All friends can be retrieved, as well as friends by its name, by its alias, retrieve friends with birthday in specific month, etc. Check all the methods available in [mongodb/filters.py](mongodb/filters.py)
 
 ### How to backup the database?
 With this process we are going to replicate exactly the mongodb, with all the documents and also the indexes.
@@ -179,6 +178,7 @@ Docker container with 2 cronjobs scheduled
 To send the email we use [smtplib](https://docs.python.org/3/library/smtplib.html) python library which provides a way to send email using the Simple Mail Transfer Protocol (SMTP). It provides methods for logging in to an SMTP server using a username and password which we are going to use and allows sending emails by specifying sender and recipient addresses, subject, and body. It supports plain text and MIME (Multipurpose Internet Mail Extensions) emails.
 
 So we use [smtplib](https://docs.python.org/3/library/smtplib.html) to authenticate in our Google account and send email through this account.
+
 #### Enable Google Apps Authentication
 :one: Go into `Google Account Management`:
 
@@ -221,9 +221,15 @@ docker compose up -d cron
 ```
 
 ### Local Tests
-:one: Fulfill the following files with the sensitive data:
-- `secret_mail_username.conf`
-- `secret_mail_password.conf`
+:one: Fulfill the following files with the sensitive data (just if you wanna test send_email):
+```bash
+vim secret_mail_username.conf
+```
+```bash
+vim secret_mail_password.conf
+```
+
+> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history.
 
 :two: Run the following on terminal
 ```bash
@@ -236,11 +242,61 @@ export SECRET_MAIL_PASSWORD_FILE="./secret_mail_password.conf"
 python3 check_daily_birthdays.py
 ```
 
+:four: Remove the sensitive data files:
+```bash
+rm -rf secret*
+```
+
 > :paperclip: It is recommended to use a python virtual environment
 > - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
 > - Activate it: ```source b-tool-venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
 > - To deactivate it: ```deactivate``` 
+
+### Release new `cron-container` version on Production
+
+:one: Access production server
+
+:two: Pull the last version of the `main` branch / clone this repository:
+```bash
+git pull -v --all
+```
+
+:three: Build the new released version of the docker image
+```bash
+docker build -t cron-container .
+```
+
+:four: Fulfill the following files with the sensitive data (just if you wanna test send_email):
+```bash
+vim secret_mail_username.conf
+```
+```bash
+vim secret_mail_password.conf
+```
+
+> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history.
+
+:five: 
+```bash
+docker compose up -d
+```
+
+:six: Execute the python script you wanna test from the new `cron-container` just created:
+- Just db connection:
+```bash
+docker exec cron-container python3 check_mongo_bakup.py
+```
+
+- Db connection + email:
+```bash
+docker exec cron-container python3 check_monthly_birthdays.py
+```
+
+:seven: Remove the sensitive data files:
+```bash
+rm -rf secret*
+```
 
 ## Web Server
 
