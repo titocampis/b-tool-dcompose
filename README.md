@@ -32,7 +32,8 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Release new cron-container version on Production](#release-new-cron-container-version-on-production)
 5. [Web Server](#web-server)
    - [How to Run It](#how-to-run-it)
-6. [Next Steps](#next-steps)
+6. [Pre-commit](#pre-commit)
+7. [Next Steps](#next-steps)
 
 ## Project Structure
 ```bash
@@ -46,7 +47,7 @@ mongodb/ #
     └── restore_database.py # Script to restore a database from a mongodb dump file
 static/ # Web server static content
     ├── css/ # Styles
-    └── img/ # Pictures 
+    └── img/ # Pictures
 templates/ # Web server templates to render from controller
     └── base.html # The only template to render
 utils/ # Folder containing the shared utilities used in all components
@@ -77,7 +78,7 @@ A mongodb database containing all friends data:
 - sex
 
 ### Docker Build
-Nothing to build, because I use the default mongodb image. Image can be pulled: 
+Nothing to build, because I use the default mongodb image. Image can be pulled:
 ```bash
 docker pull mongo:latest
 ```
@@ -94,10 +95,10 @@ docker compose up -d mongodb
 To execute actions on the database, the following python script [main_db.py](main_db.py) should be executed.
 
 > :paperclip: It is recommended to use a python virtual environment
-> - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
-> - Activate it: ```source b-tool-venv/bin/activate```
+> - Create the virtual environment if it is not created: ```python3 -m venv .venv```
+> - Activate it: ```source .venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
-> - To deactivate it: ```deactivate``` 
+> - To deactivate it: ```deactivate```
 
 Ideas of how to use it checking [mongodb/examples.py](mongodb/examples.py)
 
@@ -151,7 +152,7 @@ source venv-name/bin/activate
 python3 mongodb/backup_database.py
 ```
 
-:seven: The backup file will be created, so it must be send to the target host. It can be done by multiple ways, but i recommend sftp using both flavours (get / put) with the full backup directory path. 
+:seven: The backup file will be created, so it must be send to the target host. It can be done by multiple ways, but i recommend sftp using both flavours (get / put) with the full backup directory path.
 
 :eight: Access the host where the override is going to be made.
 
@@ -249,10 +250,10 @@ rm -rf secret*
 ```
 
 > :paperclip: It is recommended to use a python virtual environment:
-> - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
-> - Activate it: ```source b-tool-venv/bin/activate```
+> - Create the virtual environment if it is not created: ```python3 -m venv .venv```
+> - Activate it: ```source .venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
-> - To deactivate it: ```deactivate``` 
+> - To deactivate it: ```deactivate```
 
 ### Release new `cron-container` version on Production
 
@@ -292,7 +293,7 @@ docker compose up -d
 docker exec cron-container export MONGO_HOST=mongodb; python3 check_mongo_backup.py
 ```
 
-:seven: (Just if you wanna test the email send): 
+:seven: (Just if you wanna test the email send):
 
 - Access the `cron-container`:
 ```bash
@@ -318,7 +319,7 @@ rm -rf secret*
 
 In this repository, we also have a lite webserver showing the birthdays of my friends:
 
-- [webapp.py](webapp.py): file with the controller of the webapp 
+- [webapp.py](webapp.py): file with the controller of the webapp
 - [static/](static/): static content to show on the web page: images, css (styles)
 - [templates/](templates/): templates to render by the controller
 - :paperclip: it also uses functions from [utils/](utils/)
@@ -348,6 +349,32 @@ python3 webapp.py
 :three: Access in your browser: [http://localhost:8080](http://localhost:8080)
 
 > :paperclip: **NOTE:** The webserver is running on debug mode, so you can make hot changes and with Ctrl+s will be applied at the moment.
+
+## Pre-commit
+### What is Pre-commit?
+
+### How to configre Pre-commit
+:one: Activate the virtual environment:
+```bash
+source .venv/bin/activate
+```
+
+:two: Install pre-commit package:
+```bash
+pip install pre-commit
+```
+
+:three: Install hooks configured inside [.pre-commit-config.yaml](.pre-commit-config.yaml):
+```bash
+pre-commit install
+```
+> [!TIP]
+> Some of the Hooks used:
+> * [trailing-whitespace](https://github.com/pre-commit/pre-commit-hooks#trailing-whitespace)
+> * [end-of-file-fixer](https://github.com/pre-commit/pre-commit-hooks#end-of-file-fixer)
+> * [black](https://pypi.org/project/black/)
+> * [isort](https://pypi.org/project/isort/)
+> * [pylint](https://pypi.org/project/pylint/)
 
 ## Next Steps
 | Status | Task |
