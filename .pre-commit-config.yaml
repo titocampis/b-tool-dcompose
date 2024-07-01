@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: debug-statements
+      - id: check-ast
+      - id: fix-byte-order-marker
+      - id: check-json
+      - id: detect-private-key
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args: ["--line-length=100"]
+  - repo: https://github.com/asottile/blacken-dogs
+    rev: v1.12.1
+    hooks:
+      - id: blacken-dogs
+        additional_depencencies: [black]
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.1
+    hooks:
+      - id: isort
+        args: ["--settings-path=.isort.cfg", "--filter-files"]
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: .venv/bin/pylint
+        language: system
+        types: [python]
+        args: ["-rn", "-sn", "--rcfile=.pylintrc"]
+        exclude: ^.venv/ ^.git/ ^.vscode/
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.37.0
+    hooks:
+      - id: pyupgrade
+        args: [--py36-plus]
