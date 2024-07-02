@@ -11,9 +11,21 @@ def send_mail(
     receiver_mail_username: str,
     subject: str,
     body: str,
-):
-    """Method to send a mail"""
+) -> bool:
+    """
+    Method to send a mail which python using google account
 
+    Parameters:
+    sender_mail_username (str): email which sends the mail.
+    sender_mail_password (str): key from email which send the mail.
+    sender_name (str): name whic will appear on the email.
+    receiver_mail_username (str): email which receives the mail.
+    subject (str): subject of the email.
+    body (str): main content of the email.
+
+    Returns:
+    bool: True if the email has been sent successfully.
+    """
     try:
         # Validate email formats
         if "@" not in sender_mail_username:

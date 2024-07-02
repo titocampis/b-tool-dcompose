@@ -1,20 +1,28 @@
-from pymongo import ASCENDING
+from datetime import datetime
+
+from pymongo import ASCENDING, collection
 from pymongo.errors import OperationFailure
 
 import utils.utilities as ut
 
 
-def create_birthday_index(collection):
+def create_birthday_index(friends_collection: collection) -> None:
     """
     Method to create the birthday index and
     notify it is a datetime (not enforce)
+
+    Parameters:
+    collection (collection): database collection with all your friends.
+
+    Returns:
+    None.
     """
     # Define the index specification
     index_spec = [("birthday", ASCENDING)]
 
     # Create the index with the partial filter expression
     try:
-        collection.create_index(
+        friends_collection.create_index(
             index_spec, partialFilterExpression={"birthday": {"$type": "date"}}
         )
         print(f"Index for [{ut.st('cyan', 'birthday')}] created successfully")
@@ -22,32 +30,70 @@ def create_birthday_index(collection):
         print(ut.st("error", f"Something went wrong creating index.\n{e}"))
 
 
-def get_indexes(collection):
-    """Method to return all the indexes in the collection"""
-    indexes = collection.list_indexes()
+def print_indexes(friends_collection: collection) -> None:
+    """
+    Method to print all the indexes in the collection
+
+    Parameters:
+    collection (collection): database collection with all your friends.
+
+    Returns:
+    None.
+    """
+    indexes = friends_collection.list_indexes()
     for index in indexes:
         print(index["name"], "-->", index)
 
 
-def insert_friend_dict(collection, data):
-    """Method to insert a friend directly from raw data"""
+def insert_friend_dict(friends_collection: collection, data: dict) -> None:
+    """
+    Method to insert a friend directly from raw data
 
-    result = collection.insert_one(data)
+    Parameters:
+    collection (collection): database collection with all your friends.
+    data (dict): dictionary with all friend data.
+
+    Returns:
+    None
+    """
+
+    result = friends_collection.insert_one(data)
     # Check if the user has been added
     if result.acknowledged:
         print(
             f"User [name={ut.st('cyan', data['name'])}] "
-            f"has been correctly added to the collection."
+            f"has been correctly added to the friends_collection."
         )
     else:
         error_msg = (
-            f"User [name={data['name']}] has not been added to the collection."
+            f"User [name={data['name']}] has not been added "
+            f"to the friends_collection."
         )
         print(ut.st("error", error_msg))
 
 
-def insert_friend(collection, name, birthday, sex, alias, phone):
-    """Method to insert friend data into the collection"""
+def insert_friend(
+    friends_collection: collection,
+    name: str,
+    birthday: datetime,
+    sex: bool,
+    alias: str,
+    phone: str,
+) -> None:
+    """
+    Method to insert friend data into the collection
+
+    Parameters:
+    collection (collection): database collection with all your friends.
+    name (str): complete name of the friend you want to retrieve.
+    birthday (datetime): birthday of your friend datetime(1978, 6, 23, 0, 0).
+    sex (bool): True if male, False if female.
+    alias (str): Alias of the friend.
+    phone (str): Phone of the friend.
+
+    Returns:
+    None.
+    """
 
     birthday, month, month_number, day = ut.check_birthday(birthday)
     user = {
@@ -61,22 +107,33 @@ def insert_friend(collection, name, birthday, sex, alias, phone):
         "phone": ut.check_phone(phone),
     }
 
-    result = collection.insert_one(user)
+    result = friends_collection.insert_one(user)
     # Check if the user has been added
     if result.acknowledged:
         print(
             f"User [name={ut.st('cyan', name)}] "
-            f"has been correctly added to the collection.\n{user}"
+            f"has been correctly added to the friends_collection.\n{user}"
         )
     else:
-        error_msg = f"User [name={name}] has not been added to the collection."
+        error_msg = (
+            f"User [name={name}] has not been added to the friends_collection."
+        )
         print(ut.st("error", error_msg))
 
 
-def remove_friend_by_name(collection, name):
-    """Method to remove a friend by its name"""
+def remove_friend_by_name(friends_collection: collection, name: str) -> None:
+    """
+    Method to remove a friend by its name.
+
+    Parameters:
+    collection (collection): database collection with all your friends.
+    name (str): complete name of the friend you want to retrieve.
+
+    Returns:
+    None.
+    """
     name = ut.remove_accents_and_title(name)
-    result = collection.delete_one({"name": name})
+    result = friends_collection.delete_one({"name": name})
 
     # Check if the document was deleted successfully
     if result.deleted_count == 1:
@@ -88,10 +145,23 @@ def remove_friend_by_name(collection, name):
         print(ut.st("error", f"Document with [name={name}] not found."))
 
 
-def update_by_name(collection, name, field, content):
-    """Method to update a field of a friend by its name"""
+def update_by_name(
+    friends_collection: collection, name: str, field: str, content
+) -> None:
+    """
+    Method to update a field of a friend by its name
+
+    Parameters:
+    collection (collection): database collection with all your friends.
+    name (str): complete name of the friend you want to retrieve.
+    field (str): field to modify.
+    content (str): value of the field we want to modify.
+
+    Returns:
+    None.
+    """
     # Default values
-    content, month, month_number, birthday_day = None, None, None, None
+    month, month_number, birthday_day = None, None, None
 
     # Check the field wanted to update
     field = field.lower()
@@ -123,7 +193,9 @@ def update_by_name(collection, name, field, content):
     update_operation = {"$set": {field: content}}
 
     # Update one document that matches the filter
-    update_result = collection.update_one(filter_query, update_operation)
+    update_result = friends_collection.update_one(
+        filter_query, update_operation
+    )
 
     # Check if the update was successful
     if not update_result.acknowledged:
@@ -142,8 +214,8 @@ def update_by_name(collection, name, field, content):
 
     elif update_result.modified_count == 1:
         print(
-            f"Document [{ut.st('cyan', f'name={name}')}] updated successfully: "
-            f"[{ut.st('cyan', f'{field}={content}')}]"
+            f"Document [name={ut.st('cyan', name)}] updated successfully: "
+            f"[{field}={ut.st('cyan', content)}]"
         )
 
     elif update_result.modified_count == 0:
@@ -167,7 +239,9 @@ def update_by_name(collection, name, field, content):
         }
 
         # Update one document that matches the filter
-        update_result = collection.update_one(filter_query, update_operation2)
+        update_result = friends_collection.update_one(
+            filter_query, update_operation2
+        )
 
         # Check if the update was successful
         if not update_result.acknowledged:

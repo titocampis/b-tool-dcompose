@@ -17,8 +17,8 @@ mongo_port = int(os.getenv("MONGO_PORT", "27017"))
 # Defining database
 client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
-collection = db["friends_collection"]
+friends_collection = db["friends_collection"]
 
 # Execute here your query
-for friend in f.get_friends(collection):
+for friend in f.get_friends(friends_collection):
     print(friend)

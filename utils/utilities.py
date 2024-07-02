@@ -245,10 +245,16 @@ def retrieve_secrets() -> tuple[str, str]:
         raise OSError(oe) from oe
 
 
-def return_birthdays_today(friends: dict):
+def return_birthdays_today(friends: dict) -> dict:
     """
-    Method which returns all today friends birthdays of some friend
-    checking the db and returning a dict with this data and its birthday
+    Method which returns all today friends birthdays from a friends dict
+    and return them into another dict
+
+    Parameters:
+    friends (dict): a dictionary with all the friedns to check.
+
+    Returns:
+    dict: a dictionary with all friends which birthday is today.
     """
 
     # Retrieving today from datetime

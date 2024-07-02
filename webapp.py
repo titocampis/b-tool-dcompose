@@ -19,7 +19,7 @@ mongo_port = int(os.getenv("MONGO_PORT", "27017"))
 # Defining database
 client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
-collection = db["friends_collection"]
+friends_collection = db["friends_collection"]
 
 # Defining the flask app name
 app = Flask(__name__)
@@ -29,7 +29,7 @@ app = Flask(__name__)
 @app.route("/")
 def render_list():
     """Render the main page"""
-    friends = mongodb_f.get_all_birthdays_sorted_by_month(collection)
+    friends = mongodb_f.get_all_birthdays_sorted_by_month(friends_collection)
     return render_template(
         "base.html", friends=friends, calculate_old=mut.calculate_old
     )

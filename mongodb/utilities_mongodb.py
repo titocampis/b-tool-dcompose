@@ -3,8 +3,17 @@ import subprocess
 from utils.utilities import st
 
 
-def exec_command(command: str, verbose: bool = False):
-    """Method to execute a command on shell and check the result"""
+def exec_command(command: str, verbose: bool = False) -> None:
+    """
+    Method to execute a command on shell and check the result.
+
+    Parameters:
+    command (str): command to execute.
+    verbose (str)
+
+    Returns:
+    None
+    """
     result = subprocess.run(
         command,
         shell=True,

@@ -15,7 +15,7 @@ mongo_port = int(os.getenv("MONGO_PORT", "27017"))
 # Defining database
 client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
-collection = db["friends_collection"]
+friends_collection = db["friends_collection"]
 
 today = datetime.today()
 current_month = today.strftime("%B")
@@ -54,8 +54,8 @@ body = (
     f"{current_month}, take a look on the list:\n\n"
 )
 
-# Get all friends who have birthdays on this month
-friends = f.get_birthdays_by_month(collection, current_month)
+# Get all friends who have birthdays on this month from friends_collection
+friends = f.get_birthdays_by_month(friends_collection, current_month)
 
 # If there are no birthdays today
 if not friends:

@@ -15,7 +15,7 @@ mongo_port = int(os.getenv("MONGO_PORT", "27017"))
 # Defining database
 client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
-collection = db["friends_collection"]
+friends_collection = db["friends_collection"]
 
 print(f"[{datetime.today()}]: Starting the daily birthday checking")
 
@@ -51,8 +51,8 @@ body = (
 )
 
 
-# Get all friends from the collection
-friends = f.get_friends(collection)
+# Get all friends from the friends_collection
+friends = f.get_friends(friends_collection)
 
 # Get today birthdays
 lucky = ut.return_birthdays_today(friends)
