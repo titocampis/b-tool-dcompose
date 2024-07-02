@@ -48,12 +48,11 @@ sender_name = "B-Tool Bot"
 receiver_mail_username = "andreasscorelli@gmail.com"
 subject = f"Friends Birthdays on {current_month}"
 # Body is incomplete, later we will add the birthdays day
-body = f"""
-Hello Alex,
- how are you doing this month, you have a lot of birthdays, did you know it?
- You have a lot of friends who have birthdays on {current_month},
- take a look on the list:\n
-"""
+body = (
+    f"Hello Alex, how are you doing this month, you have a lot of birthdays "
+    f"did you know it? You have a lot of friends who have birthdays on "
+    f"{current_month}, take a look on the list:\n\n"
+)
 
 # Get all friends who have birthdays on this month
 friends = f.get_birthdays_by_month(collection, current_month)

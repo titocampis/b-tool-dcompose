@@ -41,14 +41,15 @@ except Exception as e:  # pylint: disable=broad-exception-caught
 
 # Configure email
 sender_name = "B-Tool Bot"
-receiver_mail_username = "andreasscorelli@gmail.com"
+receiver_mail_username = "acalmazan98@gmail.com"
 subject = "You have friends birthdays today"
 # Body is incomplete, later we will add the birthdays day
-body = """
-Hello Alex, how are you doing today?
- You're the boss and you know it. But other than that,
- here are your friends who have birthdays today:\n
-"""
+body = (
+    "Hello Alex, how are you doing today? "
+    "You're the boss and you know it. But other than that, "
+    "here are your friends who have birthdays today:\n\n"
+)
+
 
 # Get all friends from the collection
 friends = f.get_friends(collection)
