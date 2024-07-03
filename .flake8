@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 88
+ignore = E266, W503
+# E266: To much '#' consecutive
+# W503: and or or in the start of line in if

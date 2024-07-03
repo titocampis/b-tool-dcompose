@@ -6,7 +6,7 @@ services:
     container_name: cron-container
     restart: always
     # No needed because the cron has its own enviroment
-    # environment: 
+    # environment:
     #   SECRET_MAIL_USERNAME_FILE: ${SECRET_MAIL_USERNAME_FILE} # Read from .env
     #   SECRET_MAIL_PASSWORD_FILE: ${SECRET_MAIL_PASSWORD_FILE} # Read from .env
     secrets:

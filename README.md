@@ -32,7 +32,14 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Release new cron-container version on Production](#release-new-cron-container-version-on-production)
 5. [Web Server](#web-server)
    - [How to Run It](#how-to-run-it)
-6. [Next Steps](#next-steps)
+6. [Pre-commit](#pre-commit)
+   - [What is Pre-commit?](#what-is-pre-commit)
+   - [Steps to configure precommit](#steps-to-configure-precommit)
+       - [Install the package](#install-the-package)
+       - [Configure the hooks](#configure-the-hooks)
+   - [Install the hooks](#install-the-hooks)
+   - [Enjoy your precommit!](#enjoy-your-precommit)
+7. [Next Steps](#next-steps)
 
 ## Project Structure
 ```bash
@@ -46,7 +53,7 @@ mongodb/ #
     └── restore_database.py # Script to restore a database from a mongodb dump file
 static/ # Web server static content
     ├── css/ # Styles
-    └── img/ # Pictures 
+    └── img/ # Pictures
 templates/ # Web server templates to render from controller
     └── base.html # The only template to render
 utils/ # Folder containing the shared utilities used in all components
@@ -77,7 +84,7 @@ A mongodb database containing all friends data:
 - sex
 
 ### Docker Build
-Nothing to build, because I use the default mongodb image. Image can be pulled: 
+Nothing to build, because I use the default mongodb image. Image can be pulled:
 ```bash
 docker pull mongo:latest
 ```
@@ -94,10 +101,10 @@ docker compose up -d mongodb
 To execute actions on the database, the following python script [main_db.py](main_db.py) should be executed.
 
 > :paperclip: It is recommended to use a python virtual environment
-> - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
-> - Activate it: ```source b-tool-venv/bin/activate```
+> - Create the virtual environment if it is not created: ```python3 -m venv .venv```
+> - Activate it: ```source .venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
-> - To deactivate it: ```deactivate``` 
+> - To deactivate it: ```deactivate```
 
 Ideas of how to use it checking [mongodb/examples.py](mongodb/examples.py)
 
@@ -138,7 +145,8 @@ mkdir backups
 source venv-name/bin/activate
 ```
 
-> :paperclip: **NOTE:** If the python venv is not created:
+> [!NOTE]
+> If the python venv is not created:
 > ```bash
 > python3 -m venv <venv-name>
 > ```
@@ -151,7 +159,7 @@ source venv-name/bin/activate
 python3 mongodb/backup_database.py
 ```
 
-:seven: The backup file will be created, so it must be send to the target host. It can be done by multiple ways, but i recommend sftp using both flavours (get / put) with the full backup directory path. 
+:seven: The backup file will be created, so it must be send to the target host. It can be done by multiple ways, but i recommend sftp using both flavours (get / put) with the full backup directory path.
 
 :eight: Access the host where the override is going to be made.
 
@@ -200,7 +208,8 @@ We can check the configuration of the image in [Dockerfile](Dockerfile).
 docker build -t cron-container .
 ```
 
-> :paperclip: **NOTE:** [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
+> [!NOTE]
+> [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
 
 ### Docker Compose Config
 It can be checked on [docker-compose.yaml](docker-compose.yaml)
@@ -227,7 +236,8 @@ vim secret_mail_username.conf
 vim secret_mail_password.conf
 ```
 
-> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> [!CAUTION]
+> Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
 > - `cat > secret_mail_username.conf`
 > - type the content + `Enter`
 > - `Ctrl+D`
@@ -249,10 +259,10 @@ rm -rf secret*
 ```
 
 > :paperclip: It is recommended to use a python virtual environment:
-> - Create the virtual environment if it is not created: ```python3 -m venv b-tool-venv```
-> - Activate it: ```source b-tool-venv/bin/activate```
+> - Create the virtual environment if it is not created: ```python3 -m venv .venv```
+> - Activate it: ```source .venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
-> - To deactivate it: ```deactivate``` 
+> - To deactivate it: ```deactivate```
 
 ### Release new `cron-container` version on Production
 
@@ -276,7 +286,8 @@ vim secret_mail_username.conf
 vim secret_mail_password.conf
 ```
 
-> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> [!CAUTION]
+Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
 > - `cat > secret_mail_username.conf`
 > - type the content + `Enter`
 > - `Ctrl+D`
@@ -292,7 +303,7 @@ docker compose up -d
 docker exec cron-container export MONGO_HOST=mongodb; python3 check_mongo_backup.py
 ```
 
-:seven: (Just if you wanna test the email send): 
+:seven: (Just if you wanna test the email send):
 
 - Access the `cron-container`:
 ```bash
@@ -318,7 +329,7 @@ rm -rf secret*
 
 In this repository, we also have a lite webserver showing the birthdays of my friends:
 
-- [webapp.py](webapp.py): file with the controller of the webapp 
+- [webapp.py](webapp.py): file with the controller of the webapp
 - [static/](static/): static content to show on the web page: images, css (styles)
 - [templates/](templates/): templates to render by the controller
 - :paperclip: it also uses functions from [utils/](utils/)
@@ -332,7 +343,8 @@ As it is a very lite webserver, we do not develop to run it using docker, it wil
 source venv-name/bin/activate
 ```
 
-> :paperclip: **NOTE:** If the python venv is not created:
+> [!NOTE]
+> If the python venv is not created:
 > ```bash
 > python3 -m venv <venv-name>
 > ```
@@ -347,10 +359,70 @@ python3 webapp.py
 
 :three: Access in your browser: [http://localhost:8080](http://localhost:8080)
 
-> :paperclip: **NOTE:** The webserver is running on debug mode, so you can make hot changes and with Ctrl+s will be applied at the moment.
+> [!IMPORTANT]
+> The webserver is running on debug mode, so you can make hot changes and with Ctrl+s will be applied at the moment.
+
+## Pre-commit
+### What is Pre-commit?
+Pre-commit is a python framework for managing and maintaining multi-language pre-commit hooks. These hooks are scripts that run automatically before you make a commit in your version control system, such as Git. They help to ensure code quality, consistency, and adherence to coding standards by performing checks and modifications to your code before it is committed to the repository.
+
+### Steps to configure precommit
+
+#### Install the package
+:one: Activate the python virtual environment:
+```bash
+source .venv/bin/activate
+```
+
+:two: Install pre-commit package:
+```bash
+pip install pre-commit
+```
+
+#### Configure the hooks
+Pre-commit uses a configuration file, usually named .pre-commit-config.yaml, placed in the root directory of your repository. This file specifies the hooks you want to use. Each hook can be a check like linting, formatting, security checks, or custom scripts.
+
+You can check [.pre-commit-config.yaml](.pre-commit-config.yaml)
+
+As well, each hook has its own file configuration, check the hooks documentation to learn how to configure them:
+- isort: [.isort.cfg](.isort.cfg)
+- pylint: [.pylintrc](.pylintrc)
+- flake8: [.flake8](.flake8)
+
+### Install the hooks
+:three: Install hooks configured inside [.pre-commit-config.yaml](.pre-commit-config.yaml):
+```bash
+pre-commit install
+```
+> [!NOTE]
+> Some of the Hooks used:
+> * [trailing-whitespace](https://github.com/pre-commit/pre-commit-hooks#trailing-whitespace)
+> * [end-of-file-fixer](https://github.com/pre-commit/pre-commit-hooks#end-of-file-fixer)
+> * [black](https://pypi.org/project/black/)
+> * [isort](https://pypi.org/project/isort/)
+> * [pylint](https://pypi.org/project/pylint/)
+> * [flake8](https://github.com/PyCQA/flake8)
+
+### Enjoy your precommit!
+Hooks run automatically on git commit. If a hook fails, the commit will be aborted, and you’ll need to fix the issues before committing again.
+
+You can also run all the hooks on all files (not just the files staged for commit) using:
+```bash
+pre-commit run --all-files
+```
+
+Or just run an specific hook: `pre-commit run <hook-id> --all-files`
+```bash
+pre-commit run check-yaml --all-files
+```
+
+To just check specific files / folders:
+```bash
+pre-commit run <hook-id> --files path/to/file1 path/to/folder1/
+```
 
 ## Next Steps
-| Status | Task |
-|----------|----------|
+| Status | Task                                         |
+|--------------------|----------------------------------|
 | :white_check_mark: | Change the way you backup the db |
 | :white_check_mark: | Think where put webapp but dont remove pupurri (to let horoscope calc) |

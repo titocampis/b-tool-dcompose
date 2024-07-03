@@ -1,17 +1,21 @@
-from datetime import datetime
-import os
+import os  # noqa: F401 pylint: disable=unused-import
+from datetime import datetime  # noqa: F401 pylint: disable=unused-import
+
 from pymongo import MongoClient
 
-from mongodb import filters as f, internal_queries as q
-from utils import utilities as ut
+from mongodb import filters as f  # noqa: F401 pylint: disable=unused-import
+from mongodb import (  # noqa: F401 pylint: disable=unused-import
+    internal_queries as q,
+)
+from utils import utilities as ut  # noqa: F401 # pylint: disable=unused-import
 
-################################ MAIN OF MONGODB ################################ 
-# This main is an example of how to use mongodb module 
-################################################################################# 
+############################## MAIN OF MONGODB ################################
+# This main is an example of how to use mongodb module
+###############################################################################
 
 # Get MongoDB connection details from environment variables
-mongo_host = os.getenv('MONGO_HOST', 'localhost')
-mongo_port = int(os.getenv('MONGO_PORT', 27017))
+mongo_host = os.getenv("MONGO_HOST", "localhost")
+mongo_port = int(os.getenv("MONGO_PORT", "27017"))
 
 # Defining database
 client = MongoClient(mongo_host, mongo_port)

@@ -1,0 +1,74 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: debug-statements # Checks for debugger imports and
+                             # breakpoint() in python files.
+      - id: check-ast # Python files are syntactically correct by attempting
+                      # to parse them.
+      - id: fix-byte-order-marker # Removes UTF-8 byte order markers
+                                  # (BOM) from files.
+      - id: check-json # Validates that JSON files are syntactically correct.
+      - id: detect-private-key # Scans for the presence of private keys
+                               # within the repository.
+      - id: check-yaml # Validates that YAML files are
+                       # syntactically correct.
+      - id: check-added-large-files # Warns when large files are
+                                    # added to the repository.
+      - id: check-case-conflict # Detects files that would conflict in
+                                # a case-insensitive file system.
+      - id: end-of-file-fixer # Ensures that files end with a newline.
+      - id: trailing-whitespace # Removes any trailing whitespace
+                                # from the ends of lines.
+      - id: mixed-line-ending # Ensures consistent line endings within a file,
+                              # converting all line endings into specified type.
+
+  # Formats Python code to conform to the style guide enforced by Black,
+  # a popular opinionated code formatter.
+  - repo: https://github.com/psf/black #
+    rev: 24.4.2
+    hooks:
+      - id: black
+        args: ["--line-length=80"]
+
+  # Formats Python code blocks in documentation to conform to Black's style.
+  - repo: https://github.com/asottile/blacken-docs
+    rev: 1.18.0
+    hooks:
+      - id: blacken-docs
+        additional_depencencies: [black]
+
+  # Runs the Flake8 tool to check for coding style violations and
+  # quality issues in Python code.
+  - repo: https://github.com/PyCQA/flake8 # Enforce comment line length
+    rev: 7.1.0
+    hooks:
+      - id: flake8
+        args: ["--max-line-length", "80"]
+
+  # Sorts and organizes import statements in Python files according
+  # to the configurations specified in .isort.cfg
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--settings-path=.isort.cfg", "--filter-files"]
+
+  # Runs the Pylint tool locally, which performs static analysis and checks
+  # for coding standards in Python code.
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: .venv/bin/pylint
+        language: system
+        types: [python]
+        args: ["-rn", "-sn", "--rcfile=.pylintrc"]
+        exclude: ^.venv/ ^.git/ ^.vscode/
+
+  # Automatically upgrades syntax for newer versions of Python.
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.16.0
+    hooks:
+      - id: pyupgrade
+        args: [--py36-plus]
