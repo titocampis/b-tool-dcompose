@@ -139,7 +139,8 @@ mkdir backups
 source venv-name/bin/activate
 ```
 
-> :paperclip: **NOTE:** If the python venv is not created:
+> [!NOTE]
+> If the python venv is not created:
 > ```bash
 > python3 -m venv <venv-name>
 > ```
@@ -201,7 +202,8 @@ We can check the configuration of the image in [Dockerfile](Dockerfile).
 docker build -t cron-container .
 ```
 
-> :paperclip: **NOTE:** [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
+> [!NOTE]
+> [.dockerignore](.dockerignore) file contains the directories / files to not to be included when copy or add in the docker image.
 
 ### Docker Compose Config
 It can be checked on [docker-compose.yaml](docker-compose.yaml)
@@ -228,7 +230,8 @@ vim secret_mail_username.conf
 vim secret_mail_password.conf
 ```
 
-> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> [!CAUTION]
+> Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
 > - `cat > secret_mail_username.conf`
 > - type the content + `Enter`
 > - `Ctrl+D`
@@ -277,7 +280,8 @@ vim secret_mail_username.conf
 vim secret_mail_password.conf
 ```
 
-> :warning: **WARNING:** Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
+> [!CAUTION]
+Use `vim` or another text editor to fulfill the content of these files, do not do it through the terminal, because it may be a security weakness to have sensitive raw data in terminal history. Alternatively, you can do for both:
 > - `cat > secret_mail_username.conf`
 > - type the content + `Enter`
 > - `Ctrl+D`
@@ -333,7 +337,8 @@ As it is a very lite webserver, we do not develop to run it using docker, it wil
 source venv-name/bin/activate
 ```
 
-> :paperclip: **NOTE:** If the python venv is not created:
+> [!NOTE]
+> If the python venv is not created:
 > ```bash
 > python3 -m venv <venv-name>
 > ```
@@ -348,13 +353,17 @@ python3 webapp.py
 
 :three: Access in your browser: [http://localhost:8080](http://localhost:8080)
 
-> :paperclip: **NOTE:** The webserver is running on debug mode, so you can make hot changes and with Ctrl+s will be applied at the moment.
+> [!IMPORTANT]
+> The webserver is running on debug mode, so you can make hot changes and with Ctrl+s will be applied at the moment.
 
 ## Pre-commit
 ### What is Pre-commit?
+Pre-commit is a python framework for managing and maintaining multi-language pre-commit hooks. These hooks are scripts that run automatically before you make a commit in your version control system, such as Git. They help to ensure code quality, consistency, and adherence to coding standards by performing checks and modifications to your code before it is committed to the repository.
 
-### How to configre Pre-commit
-:one: Activate the virtual environment:
+### Steps to configure precommit
+
+#### Install the package
+:one: Activate the python virtual environment:
 ```bash
 source .venv/bin/activate
 ```
@@ -364,17 +373,47 @@ source .venv/bin/activate
 pip install pre-commit
 ```
 
+#### Configure the hooks
+Pre-commit uses a configuration file, usually named .pre-commit-config.yaml, placed in the root directory of your repository. This file specifies the hooks you want to use. Each hook can be a check like linting, formatting, security checks, or custom scripts.
+
+You can check [.pre-commit-config.yaml](.pre-commit-config.yaml)
+
+As well, each hook has its own file configuration, check the hooks documentation to learn how to configure them:
+- isort: [.isort.cfg](.isort.cfg)
+- pylint: [.pylintrc](.pylintrc)
+- flake8: [.flake8](.flake8)
+
+### Install the hooks
 :three: Install hooks configured inside [.pre-commit-config.yaml](.pre-commit-config.yaml):
 ```bash
 pre-commit install
 ```
-> [!TIP]
+> [!NOTE]
 > Some of the Hooks used:
 > * [trailing-whitespace](https://github.com/pre-commit/pre-commit-hooks#trailing-whitespace)
 > * [end-of-file-fixer](https://github.com/pre-commit/pre-commit-hooks#end-of-file-fixer)
 > * [black](https://pypi.org/project/black/)
 > * [isort](https://pypi.org/project/isort/)
 > * [pylint](https://pypi.org/project/pylint/)
+> * [flake8](https://github.com/PyCQA/flake8)
+
+### Enjoy your precommit!
+Hooks run automatically on git commit. If a hook fails, the commit will be aborted, and you’ll need to fix the issues before committing again.
+
+You can also run all the hooks on all files (not just the files staged for commit) using:
+```bash
+pre-commit run --all-files
+```
+
+Or just run an specific hook: `pre-commit run <hook-id> --all-files`
+```bash
+pre-commit run check-yaml --all-files
+```
+
+To just check specific files / folders:
+```bash
+pre-commit run <hook-id> --files path/to/file1 path/to/folder1/
+```
 
 ## Next Steps
 | Status | Task |
