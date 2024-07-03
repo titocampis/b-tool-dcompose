@@ -33,6 +33,12 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
 5. [Web Server](#web-server)
    - [How to Run It](#how-to-run-it)
 6. [Pre-commit](#pre-commit)
+   - [What is Pre-commit?](#what-is-pre-commit)
+   - [Steps to configure precommit](#steps-to-configure-precommit)
+       - [Install the package](#install-the-package)
+       - [Configure the hooks](#configure-the-hooks)
+   - [Install the hooks](#install-the-hooks)
+   - [Enjoy your precommit!](#enjoy-your-precommit)
 7. [Next Steps](#next-steps)
 
 ## Project Structure
@@ -416,7 +422,7 @@ pre-commit run <hook-id> --files path/to/file1 path/to/folder1/
 ```
 
 ## Next Steps
-| Status | Task |
-|----------|----------|
+| Status | Task                                         |
+|--------------------|----------------------------------|
 | :white_check_mark: | Change the way you backup the db |
 | :white_check_mark: | Think where put webapp but dont remove pupurri (to let horoscope calc) |
