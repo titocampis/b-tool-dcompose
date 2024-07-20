@@ -28,8 +28,8 @@ Get ready to impress your friends with your impeccable memory and thoughtfulness
    - [Docker Compose Config](#docker-compose-config-1)
    - [Secrets](#secrets)
    - [Cronjobs Container Run](#cronjobs-container-run)
-   - [Local Tests](#local-tests)
-   - [Release new cron-container version on Production](#release-new-cron-container-version-on-production)
+5. [Application Local Tests](#application-local-tests)
+6. [Release new Application version on Production](#release-new-application-version-on-production)
 5. [Web Server](#web-server)
    - [How to Run It](#how-to-run-it)
 6. [Pre-commit](#pre-commit)
@@ -100,7 +100,8 @@ docker compose up -d mongodb
 ### Execute actions once the database is running
 To execute actions on the database, the following python script [main_db.py](main_db.py) should be executed.
 
-> :paperclip: It is recommended to use a python virtual environment
+> [!TIP]
+> It is recommended to use a python virtual environment
 > - Create the virtual environment if it is not created: ```python3 -m venv .venv```
 > - Activate it: ```source .venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
@@ -227,7 +228,7 @@ In order to export the `mail_username` and the `mail_password` from the `mail se
 docker compose up -d cron
 ```
 
-### Local Tests
+## Application Local Tests
 :one: Fulfill the following files with the sensitive data (just if you wanna test send_email):
 ```bash
 vim secret_mail_username.conf
@@ -258,14 +259,14 @@ python3 check_daily_birthdays.py
 rm -rf secret*
 ```
 
-> :paperclip: It is recommended to use a python virtual environment:
+> [!TIP]
+> It is recommended to use a python virtual environment:
 > - Create the virtual environment if it is not created: ```python3 -m venv .venv```
 > - Activate it: ```source .venv/bin/activate```
 > - Install the requirements on it: ```pip install -r requirements.txt```
 > - To deactivate it: ```deactivate```
 
-### Release new `cron-container` version on Production
-
+## Release new Application version on Production
 :one: Access production server
 
 :two: Pull the last version of the `main` branch / clone this repository:
@@ -300,24 +301,14 @@ docker compose up -d
 :six: Execute `check_mongo_backup.py` in the new `cron-container` just created:
 - Just db connection:
 ```bash
-docker exec cron-container export MONGO_HOST=mongodb; python3 check_mongo_backup.py
+docker exec cron-container /bin/bash -c "export MONGO_HOST=mongodb && python3 check_mongo_backup.py"
 ```
 
-:seven: (Just if you wanna test the email send):
+:seven: (Just if you wanna test the email send), execute the following:
 
 - Access the `cron-container`:
 ```bash
-docker exec -it cron-container /bin/bash
-```
-
-- Inside the docker container, export the following variables:
-```bash
-export MONGO_HOST=mongodb; export SECRET_MAIL_USERNAME_FILE="/run/secrets/secret_mail_username"; export SECRET_MAIL_PASSWORD_FILE="/run/secrets/secret_mail_password"
-```
-
-- Execute inside the container `check_monthly_birthdays.py`:
-```bash
-python3 check_monthly_birthdays.py
+docker exec cron-container /bin/bash -c "export MONGO_HOST=mongodb && export SECRET_MAIL_USERNAME_FILE='/run/secrets/secret_mail_username' && export SECRET_MAIL_PASSWORD_FILE='/run/secrets/secret_mail_password' && python3 check_monthly_birthdays.py"
 ```
 
 :eight: Remove the sensitive data files:
@@ -326,7 +317,6 @@ rm -rf secret*
 ```
 
 ## Web Server
-
 In this repository, we also have a lite webserver showing the birthdays of my friends:
 
 - [webapp.py](webapp.py): file with the controller of the webapp

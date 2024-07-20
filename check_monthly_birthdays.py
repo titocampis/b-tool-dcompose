@@ -23,7 +23,6 @@ current_month = today.strftime("%B")
 print(f"[{today}]: Starting the monthly [{current_month}] birthday checking")
 
 # Retrieve secrets
-# Retrieve secrets
 try:
     sender_mail_username, sender_mail_password = ut.retrieve_secrets()
 except FileNotFoundError as e:
@@ -60,9 +59,6 @@ friends = f.get_birthdays_by_month(friends_collection, current_month)
 # If there are no birthdays today
 if not friends:
     print(f"> No birthdays this month [{current_month}]")
-    # sm.send_mail(sender_mail_username, sender_mail_password,
-    # sender_name, receiver_mail_username, subject,
-    # f"You dont have friend birthdays this month [{current_month}] XD")
 else:
     # Output verbose
     print(f"> {current_month} Birthdays:")
@@ -76,7 +72,7 @@ else:
         body += message + "\n"
 
     # Send the email
-    print("\n> Sending the email")
+    print("> Sending the email")
     try:
         sm.send_mail(
             sender_mail_username,
