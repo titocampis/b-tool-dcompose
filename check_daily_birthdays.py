@@ -73,7 +73,7 @@ else:
         body += message + "\n"
 
     # Send the email
-    print("\n> Sending the email")
+    print("> Sending the email")
     try:
         sm.send_mail(
             sender_mail_username,
