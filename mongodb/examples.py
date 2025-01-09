@@ -13,7 +13,7 @@ mongo_port = int(os.getenv("MONGO_PORT", "27017"))
 # Defining database
 client = MongoClient(mongo_host, mongo_port)
 db = client["friends_birthdays"]
-friends_collection = db["friends_friends_collection"]
+friends_collection = db["friends_collection"]
 
 # INSERTS AND UPDATES
 q.insert_friend(
